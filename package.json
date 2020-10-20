@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@rmwc/ripple": "^6.1.4",
+    "@rmwc/theme": "^6.1.4",
     "@types/react-router-dom": "^5.1.6",
     "react-router-dom": "^5.2.0"
   }
