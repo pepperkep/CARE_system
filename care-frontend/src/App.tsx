@@ -10,23 +10,23 @@ function App() {
     <Router>
       <NavigationBar />
       <Switch>
-        <Route path="/">
+        <Route path="/" exact>
           <Home />
         </Route>
 
-        <Route path="/acount">
+        <Route path="/account" exact>
           <Account />
         </Route>
 
-        <Route path="/faq">
+        <Route path="/faq" exact>
           <FAQ />
         </Route>
 
-        <Route path="/group">
+        <Route path="/group" exact>
           <Group />
         </Route>
 
-        <Route path="/Report">
+        <Route path="/reports" exact>
           <Report />
         </Route>
       </Switch>
