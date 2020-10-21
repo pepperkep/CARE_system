@@ -4,8 +4,8 @@ import { IResultCardList } from './ResultCardList';
 import { useTrail, animated } from 'react-spring';
 import { Grid } from '@material-ui/core';
 
-export const ResultCardList: React.FC<IResultCardList.IProps> = ({ dataList }) => {
-    const trail = useTrail(dataList.length, {
+export const ResultCardList: React.FC<IResultCardList.IProps> = ({ groupList }) => {
+    const trail = useTrail(groupList.length, {
         opacity: 1,
         from: { opacity: 0 }
     })
@@ -16,7 +16,7 @@ export const ResultCardList: React.FC<IResultCardList.IProps> = ({ dataList }) =
                 {trail.map((props, index) => (
                     <animated.div style={props} key={index}>
                         <Grid>
-                            <ResultCard data={dataList[index]} index={index} />
+                            <ResultCard group={groupList[index]} index={index} />
                         </Grid>
                     </animated.div>
                 ))}

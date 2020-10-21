@@ -1,8 +1,8 @@
-import { Data } from '../../interfaces/Data';
+import { Group } from '../../interfaces/Group';
 
 declare namespace IResultCardList {
     export interface IProps {
-        dataList: Data[];
+        groupList: Group[];
     }
 }
 

@@ -1,9 +1,9 @@
-import { Data } from '../../../interfaces/Data';
+import { Group } from '../../../interfaces/Group';
 
 declare namespace IResultCard {
     export interface IProps {
         index: number;
-        data: Data;
+        group: Group;
     }
 }
 
