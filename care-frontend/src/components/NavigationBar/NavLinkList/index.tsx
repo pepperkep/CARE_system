@@ -20,7 +20,7 @@ export const NavLinkList: FunctionComponent<INavLinkList.IProps> = ({ className 
                     className={currentPageState === 1 ? "nav-item-selected" : ""}
                     onClick={() => navLinkClickHandler(1)}
                     text='Home'
-                    to="/home"
+                    to="/"
                 />
                 <NavLink
                     className={currentPageState === 2 ? "nav-item-selected" : ""}
