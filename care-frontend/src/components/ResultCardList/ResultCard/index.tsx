@@ -18,26 +18,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const ResultCard: React.FC<IResultCard.IProps> = ({ data, index }) => {
+export const ResultCard: React.FC<IResultCard.IProps> = ({ group, index }) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.rootCard} key={index}>
             <CardContent>
-                {data.agents.length > 0 && (
+                {group.size && (
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        {/* {i18n.language === 'cn' ? '代理人' : 'Agents'}：{data.agents.map((agent, index) => index === data.agents.length - 1 ? agent.name : `${agent.name}, `)} */}
+                        size: {group.size}
                     </Typography>
                 )}
                 <Typography variant="h5" component="h2">
-                    <strong>{data.title}</strong>
+                    <strong>{group.name}</strong>
+                </Typography>
+                <Typography variant="subtitle1" component="h2">
+                    rating: <strong>{group.rating}</strong>
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
                     {/* {i18n.language === 'cn' ? '发明人' : 'Inventors'}：{data.inventors.map((inventor, index) => index === data.inventors.length - 1 ? inventor.name.original : `${inventor.name.original}, `)} */}
                 </Typography>
-                <Typography variant="body2" component="p">
-                    {data.mainClaim}
-                </Typography>
+                {group.location && 
+                    <Typography variant="body2" component="p">
+                        location: {group.location}
+                    </Typography>
+                }
             </CardContent>
         </Card>
     )
