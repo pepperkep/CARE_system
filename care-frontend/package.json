@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@rmwc/ripple": "^6.1.4",
     "@rmwc/theme": "^6.1.4",
     "@testing-library/jest-dom": "^4.2.4",
@@ -14,6 +15,9 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.6",
+    "install": "^0.13.0",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "npm": "^6.14.8",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.0",
