@@ -34,7 +34,7 @@ export const NavigationBar: React.FC<INavigationBar.IProps> = ({ className }) =>
         <React.Fragment>
             <nav className='navbar'>
                 <div className={titleClass}>
-                    <h1 onClick={handleClickTitle} style={{ cursor: "pointer" }}>Case Accountability Reporting Engine (CARE)</h1>
+                    <h1 onClick={handleClickTitle} style={{ cursor: "pointer" }}>Case Accountability Reporting Engine</h1>
                 </div>
 
                 {redirect && <Redirect to='home' />}
