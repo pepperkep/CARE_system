@@ -22,7 +22,7 @@ export const ResultCard: React.FC<IResultCard.IProps> = ({ group, index }) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.rootCard} key={index}>
+        <Card data-test-id="ResultCard" className={classes.rootCard} key={index}>
             <CardContent>
                 {group.size && (
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
