@@ -23,7 +23,7 @@ export const Card = () => {
 
     return (
         <div className={classes.root}>
-        <Accordion>
+        <Accordion data-test-id="Card">
             <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
