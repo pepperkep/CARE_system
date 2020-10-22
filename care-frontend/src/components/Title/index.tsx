@@ -14,7 +14,7 @@ export const Title = () => {
 
     return (
       <div className={classes.root}>
-        <Typography variant="h5" gutterBottom>
+        <Typography data-test-id="Title" variant="h5" gutterBottom>
             Frequently Asked Questions
         </Typography>
       </div>
