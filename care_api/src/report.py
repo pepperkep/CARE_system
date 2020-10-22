@@ -1,14 +1,14 @@
 from flask import Flask
 from pymongo import MongoClient
 from configparser import ConfigParser
-import datetime as datetime
+from datetime import datetime
 from database import database_handler as db
 from app import care_app
 
 
 
 @care_app.route('/report/<int:report_id>', methods=[ 'POST'])
-def add_report(report_id, content):
+def add_report(report_id, content, timestamp = datetime.now()):
     pass
 
 @care_app.route('/report/<int:report_id>', methods=[ 'DELETE'])

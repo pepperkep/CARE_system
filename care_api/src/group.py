@@ -5,7 +5,7 @@ import datetime as datetime
 from database import database_handler as db
 from app import care_app
 
-
+        
 
 @care_app.route('/group/<int:group_id>', methods=[ 'POST'])
 def add_group(group_id, name, description):
