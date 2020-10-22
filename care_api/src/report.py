@@ -7,16 +7,16 @@ from app import care_app
 
 
 
-@care_app.route('/group/<int:group_id>', methods=[ 'POST'])
-def add_group(group_id, name, description):
+@care_app.route('/report/<int:report_id>', methods=[ 'POST'])
+def add_report(report_id, content):
     pass
 
-@care_app.route('/group/<int:group_id>', methods=[ 'DELETE'])
-def delete_group(group_id):
+@care_app.route('/report/<int:report_id>', methods=[ 'DELETE'])
+def delete_report(report_id):
     pass
 
-@care_app.route('/group/<int:group_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
-def update_group(report_id):
+@care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
+def update_report(report_id):
     pass
 
 care_app.route('/report/<int:report_id>', methods=['GET'])
