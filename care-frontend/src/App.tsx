@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Group, Account, FAQ, Home, Report } from './pages';
 import { NavigationBar } from './components';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
