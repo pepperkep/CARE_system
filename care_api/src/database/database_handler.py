@@ -6,11 +6,10 @@ from urllib.parse import quote_plus
 class DatabaseHandler:
 
     def get_connect_string(self, db_config):
-        connection_uri = 'mongodb://{}:{}@{}:{}'.format( \
-                quote_plus(db_config['username']), \
-                quote_plus(db_config['password']), \
+        connection_uri = 'mongodb://{}:{}'.format( \
                 db_config['host'], \
                 db_config['port'])
+        return connection_uri
 
     def check_connection(self):
         try:

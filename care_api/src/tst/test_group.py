@@ -11,7 +11,7 @@ class TestGroup(unittest.TestCase):
 
     def setUp(self):
         self.mock_db_handler = MagicMock()
-        self.group = User(self.mock_db_handler)
+        self.group = Group(self.mock_db_handler)
 
     def test_add_group(self):
         self.mock_db_handler.create.return_value = 'test'
@@ -20,7 +20,7 @@ class TestGroup(unittest.TestCase):
             actual_result = self.group.add_group(45)
             self.assertEqual(expected_result, actual_result)
 
-    def test_view_group:
+    def test_view_group(self):
         expected_result = {'name': 'marx', 'description':'group','_id':  45}
         with app.test_request_context(45, json=json.dumps({'name': 'marx', 'description': 'group'})):
             actual_result = self.mock_db_handler.find(45)
