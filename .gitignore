@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# configs
+/care_api/src/config/*
+
 # testing
 /coverage
 

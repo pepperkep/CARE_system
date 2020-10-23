@@ -3,9 +3,8 @@ from database.database_handler import DatabaseHandler
 
 class User:
 
-    def __init__(db_handler):
+    def __init__(self, db_handler):
         self.db_handler = db_handler
-        
 
     def determine_action(self, path):
        
@@ -13,13 +12,13 @@ class User:
         params = tuple(path_list[1:])
         action = path_list[0]
         if action == 'signup':
-            return signup(*params)
+            return self.signup(*params)
         if action == 'login':
-            return login(*params)
+            return self.login(*params)
         if action == change_password:
-            return change_password(*params)
+            return self.change_password(*params)
         if request.method == 'DELETE':
-            return delete_account(action, *params)
+            return self.delete_account(action, *params)
         abort(404)
 
     def signup(self, user_id):

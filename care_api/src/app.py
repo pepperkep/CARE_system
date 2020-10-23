@@ -1,13 +1,19 @@
 from flask import Flask, request
-import user
+from user import User
+from configparser import ConfigParser
+from database.database_handler import DatabaseHandler
 
 # Instantiate Flask app
 care_app = Flask('care_api')
+config_path = 'config/config.ini'
+config = ConfigParser()
+config.read(config_path)
+care_app.secret_key = config['app']['secret_key']
 
-
-@care_app.route('/account/<path:action>', methods=['POST', 'DELETE'])
+@care_app.route('/account/<path:action>', methods=['GET', 'POST', 'DELETE'])
 def update_account(action):
-    return user.determine_action(action)
+    current_user = User(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    return current_user.determine_action(action)
 
 @care_app.route('/group/<int:group_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def change_groups(group_id):
