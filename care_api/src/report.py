@@ -11,13 +11,13 @@ class Report:
         self.db_handler = db_handler
 
 
-    def add_report(report_id, content, timestamp = datetime.now()):
+    def add_report(report_id, content, timestamp):
         report_doc =  {"_id":report_id,
             "content":request.form['content'],
             "timestamp":timestamp
             }
         db.create(report_doc)
-
+        return report_doc
 
     def delete_report(report_id):
         db.delete(db.find({"_id":report_id}))
@@ -26,8 +26,8 @@ class Report:
     def update_report_contents(report_id):
         new_content = { "$set": {'content': request.form['new_content']}}
         db.update(db.find({"_id":report_id}), new_content)
-
+        return db.find({"_id":report_id})
 
 
     def view_report(report_id):
-        print(db.find({"_id":report_id}))
+        return db.find({"_id":report_id})
