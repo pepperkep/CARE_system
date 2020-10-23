@@ -1,24 +1,34 @@
-from flask import Flask
-from pymongo import MongoClient
-from configparser import ConfigParser
-import datetime as datetime
-from database import database_handler as db
-from app import care_app
+from flask import request, abort, json, session
+from database.database_handler import DatabaseHandler as db
 
 
 
-@care_app.route('/group/<int:group_id>', methods=[ 'POST'])
-def add_group(group_id, name, description):
-    pass
 
-@care_app.route('/group/<int:group_id>', methods=[ 'DELETE'])
-def delete_group(group_id):
-    pass
 
-@care_app.route('/group/<int:group_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
-def update_group(report_id):
-    pass
+class Group:
 
-care_app.route('/report/<int:report_id>', methods=['GET'])
-def view_group(group_id):
-    pass
+    def __init__(self, db_handler):
+        self.db_handler = db_handler
+
+
+    def add_group(group_id, name, description):
+        group_doc =  {"_id":group_id,
+            "name":request.form['name'],
+            "description":request.form['description']
+            }
+        db.create(group_doc)
+
+
+    def delete_group(group_id):
+        db.delete(db.find({"_id":group_id}))
+
+
+    def update_group(group_id):
+        new_name = { "$set": {'name': request.form['new_name']}}
+        new_descritpion = { "$set": {'description': request.form['new_description']}}
+        db.update(db.find({"_id":group_id}), new_name)
+        db.update(db.find({"_id":group_id}), new_description)
+
+
+    def view_group(group_id):
+        print(db.find({"_id":group_id}))

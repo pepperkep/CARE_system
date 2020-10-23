@@ -1,24 +1,33 @@
-from flask import Flask
-from pymongo import MongoClient
-from configparser import ConfigParser
+from flask import request, abort, json, session
 from datetime import datetime
-from database import database_handler as db
-from app import care_app
+from database.database_handler import DatabaseHandler as db
 
 
 
-@care_app.route('/report/<int:report_id>', methods=[ 'POST'])
-def add_report(report_id, content, timestamp = datetime.now()):
-    pass
 
-@care_app.route('/report/<int:report_id>', methods=[ 'DELETE'])
-def delete_report(report_id):
-    pass
+class Report:
 
-@care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
-def update_report(report_id):
-    pass
+    def __init__(self, db_handler):
+        self.db_handler = db_handler
 
-care_app.route('/report/<int:report_id>', methods=['GET'])
-def view_report(report_id):
-    pass
+
+    def add_report(report_id, content, timestamp = datetime.now()):
+        report_doc =  {"_id":report_id,
+            "content":request.form['content'],
+            "timestamp":timestamp
+            }
+        db.create(report_doc)
+
+
+    def delete_report(report_id):
+        db.delete(db.find({"_id":report_id}))
+
+
+    def update_report_contents(report_id):
+        new_content = { "$set": {'content': request.form['new_content']}}
+        db.update(db.find({"_id":report_id}), new_content)
+
+
+
+    def view_report(report_id):
+        print(db.find({"_id":report_id}))
