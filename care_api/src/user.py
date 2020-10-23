@@ -15,8 +15,10 @@ class User:
             return self.signup(*params)
         if action == 'login':
             return self.login(*params)
-        if action == change_password:
+        if action == 'change_password':
             return self.change_password(*params)
+        if request.method == 'GET':
+            return self.access_user(action, *params)
         if request.method == 'DELETE':
             return self.delete_account(action, *params)
         abort(404)
@@ -39,14 +41,25 @@ class User:
     def change_password(self, username):
         try:
             query = {'_id': request.form['id'],
-                    'username': request.form['username']}
         except KeyError:
             abort(400)
         change = { "$set": {'password': request.form['new_password']}}
         self.db_handler.update('user', query, change)
         return query
+        
+    def access_user(self, account_id):
+        try:
+            query = {'_id': account_id}
+        except KeyError:
+            abort(400)
+        self.db_handler.find_one('user', query, change)
+        return query
 
     def delete_account(self, account_id):
+        try:
+            query = {'_id': account_id}
+        except KeyError:
+            abort(400)
         query = {'_id': account_id}
-        self.db_handler.update('user', query, change)
-        return account_id
+        self.db_handler.delete('user', query, change)
+        return query
