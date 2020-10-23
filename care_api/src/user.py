@@ -26,10 +26,11 @@ class User:
         abort(404)
 
     def signup(self, user_id):
+        request_data = json.loads(request.json)
         try:
-            user_doc = {'_id': user_id,
-                    'username': request.form['username'],
-                    'password': request.form['password']}
+            user_doc = {'_id': int(user_id),
+                    'username': request_data['username'],
+                    'password': request_data['password']}
         except KeyError:
             abort(400)
         self.db_handler.create('user', user_doc)
@@ -38,36 +39,38 @@ class User:
         return response_dict
 
     def login(self, login_id):
+        request_data = json.loads(request.json)
         try:
-            query = {'_id': login_id}
+            query = {'_id': int(login_id)}
         except KeyError:
             abort(400)
         result = self.db_handler.find_one('user', query, change)
-        if request.form['username'] == result['username'] and request.form['password'] == result['password']:
+        if request_data['username'] == result['username'] and request_data['password'] == result['password']:
             session[login_id] = login_id
         else:
             abort(401)
         return {}
 
     def logout(self, login_id):
-        session.pop(login_id, None)
+        session.pop(int(login_id), None)
         return {}
 
     def change_password(self, username):
+        request_data = json.loads(request.json)
         try:
-            query = {'_id': request.form['id']}
+            query = {'_id': request_data['id']}
         except KeyError:
             abort(400)
-        change = { "$set": {'password': request.form['new_password']}}
+        change = { "$set": {'password': request_data['new_password']}}
         self.db_handler.update('user', query, change)
         return query
         
     def access_user(self, account_id):
-        query = {'_id': account_id}
+        query = {'_id': int(account_id)}
         result =  self.db_handler.find_one('user', query, change)
         return result
 
     def delete_account(self, account_id):
-        query = {'_id': account_id}
+        query = {'_id': int(account_id)}
         self.db_handler.delete('user', query, change)
         return query
