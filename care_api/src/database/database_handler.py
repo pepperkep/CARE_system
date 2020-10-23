@@ -32,20 +32,20 @@ class DatabaseHandler:
         self.db_client.close()
         self.is_connected = False
 
-    def find_all(self, selector):
-        return self.db.find(selector)
+    def find_all(self, collection_name, selector):
+        return self.db[collection_name].find(selector)
 
-    def find(self, selector):
-        return self.db.find_one(selector)
+    def find(self, collection_name, selector):
+        return self.db[collection_name].find_one(selector)
 
-    def create(self, doc):
-        return self.db.insert_one(doc)
+    def create(self, collection_name, doc):
+        return self.db[collection_name].insert_one(doc)
 
-    def update(self, selector, doc):
-        return self.db.replace_one(selector, doc).modified_count
+    def update(self, collection_name, selector, doc):
+        return self.db[collection_name].replace_one(selector, doc).modified_count
 
-    def delete(self, selector):
-        return self.db.delete_one(selector).deleted_count
+    def delete(self, collection_name, selector):
+        return self.db[collection_name].delete_one(selector).deleted_count
 
     def __init__(self, config_file_path, database_name):
         config = ConfigParser()

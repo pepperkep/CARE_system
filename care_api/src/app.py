@@ -5,7 +5,7 @@ import user
 care_app = Flask('care_api')
 
 
-@care_app.route('/account/<path:action>', methods=['GET', 'POST', 'DELETE'])
+@care_app.route('/account/<path:action>', methods=['POST', 'DELETE'])
 def update_account(action):
     return user.determine_action(action)
 
