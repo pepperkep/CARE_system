@@ -20,7 +20,7 @@ class User:
         if action == 'change_password':
             return self.change_password(*params)
         if request.method == 'GET':
-            return self.access_user(action, *params)
+            return self.access_user(*params)
         if request.method == 'DELETE':
             return self.delete_account(action, *params)
         abort(404)
@@ -44,9 +44,9 @@ class User:
             query = {'_id': int(login_id)}
         except KeyError:
             abort(400)
-        result = self.db_handler.find_one('user', query, change)
+        result = self.db_handler.find('user', query)
         if request_data['username'] == result['username'] and request_data['password'] == result['password']:
-            session[login_id] = login_id
+            session[int(login_id)] = int(login_id)
         else:
             abort(401)
         return {}
@@ -67,10 +67,10 @@ class User:
         
     def access_user(self, account_id):
         query = {'_id': int(account_id)}
-        result =  self.db_handler.find_one('user', query, change)
+        result =  self.db_handler.find('user', query)
         return result
 
     def delete_account(self, account_id):
         query = {'_id': int(account_id)}
-        self.db_handler.delete('user', query, change)
+        self.db_handler.delete('user', query)
         return query
