@@ -1,11 +1,13 @@
-from flask import Flask
+from flask import Flask, request
+import user
 
 # Instantiate Flask app
 care_app = Flask('care_api')
 
-@care_app.route('/account/<path:action>', methods=['POST', 'DELETE'])
+
+@care_app.route('/account/<path:action>', methods=['GET', 'POST', 'DELETE'])
 def update_account(action):
-    pass
+    return user.determine_action(action)
 
 @care_app.route('/group/<int:group_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def change_groups(group_id):
