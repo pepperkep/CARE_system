@@ -28,7 +28,7 @@ const columns: Column[] = [
     },
     {
       id: 'details',
-      label: 'details',
+      label: 'Details',
       minWidth: 170,
     },
 ];
