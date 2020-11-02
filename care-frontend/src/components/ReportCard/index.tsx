@@ -24,14 +24,12 @@ const columns: Column[] = [
       id: 'time',
       label: 'Time',
       minWidth: 170,
-      align: 'right',
       format: (value: number) => value.toLocaleString('en-US'),
     },
     {
       id: 'details',
       label: 'details',
       minWidth: 170,
-      align: 'right'
     },
 ];
   
