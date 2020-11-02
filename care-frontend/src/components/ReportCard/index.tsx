@@ -10,7 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 interface Column {
-    id: 'group' | 'location' | 'time' | 'size' | 'details';
+    id: 'group' | 'location' | 'time' | 'details';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -23,13 +23,6 @@ const columns: Column[] = [
     {
       id: 'time',
       label: 'Time',
-      minWidth: 170,
-      align: 'right',
-      format: (value: number) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'size',
-      label: 'Size\u00a0(km\u00b2)',
       minWidth: 170,
       align: 'right',
       format: (value: number) => value.toLocaleString('en-US'),
@@ -116,8 +109,10 @@ export const ReportCard = () => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.location}>
                   {columns.map((column) => {
+                    const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
                     );
                   })}
