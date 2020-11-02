@@ -38,6 +38,7 @@ const columns: Column[] = [
       id: 'details',
       label: 'details',
       minWidth: 170,
+      align: 'right'
     },
 ];
   
@@ -45,30 +46,29 @@ interface Data {
     group: string;
     location: string;
     time: number;
-    size: number;
     details: string;
 }
   
-function createData(group: string, location: string, time: number, size: number, details: string): Data {
-    return { group, location, time, size, details };
+function createData(group: string, location: string, time: number, details: string): Data {
+    return { group, location, time, details };
 }
   
 const rows = [
-    createData('India', 'IN', 1324171354, 3287263, 'd'),
-    createData('China', 'CN', 1403500365, 9596961, 'd'),
-    createData('Italy', 'IT', 60483973, 301340, 'd'),
-    createData('United States', 'US', 327167434, 9833520, 'd'),
-    createData('Canada', 'CA', 37602103, 9984670, 'd'),
-    createData('Australia', 'AU', 25475400, 7692024, 'd'),
-    createData('Germany', 'DE', 83019200, 357578, 'd'),
-    createData('Ireland', 'IE', 4857000, 70273, 'd'),
-    createData('Mexico', 'MX', 126577691, 1972550, 'd'),
-    createData('Japan', 'JP', 126317000, 377973, 'd'),
-    createData('France', 'FR', 67022000, 640679, 'd'),
-    createData('United Kingdom', 'GB', 67545757, 242495, 'd'),
-    createData('Russia', 'RU', 146793744, 17098246, 'd'),
-    createData('Nigeria', 'NG', 200962417, 923768, 'd'),
-    createData('Brazil', 'BR', 210147125, 8515767, 'd'),
+    createData('Soccer', 'DiSanto', 12, 'details'),
+    createData('Basketball', 'Veale', 11, 'details'),
+    createData('Volleyball', 'Adelbert', 8, 'details'),
+    createData('Tennis', 'South Side', 7, 'details'),
+    createData('Racquetball', 'Veale', 12, 'details'),
+    createData('Swimming', 'Veale', 9, 'details'),
+    createData('Football', 'DiSanto', 8, 'details'),
+    createData('Running', 'DiSanto', 9, 'details'),
+    createData('Track', 'DiSanto', 12, 'details'),
+    createData('Cross Country', 'DiSanto', 11, 'details'),
+    createData('Chess', 'Tink', 9, 'details'),
+    createData('Frisbee', 'Veale Fields', 3, 'details'),
+    createData('Intramural', 'Veale', 6, 'details'),
+    createData('Fencing', 'Adelbert', 2, 'details'),
+    createData('Archery', 'Adelbert', 1, 'details'),
 ];
   
 const useStyles = makeStyles({
@@ -116,10 +116,8 @@ export const ReportCard = () => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.location}>
                   {columns.map((column) => {
-                    const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
                     );
                   })}
