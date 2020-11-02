@@ -16,21 +16,21 @@ class TestUser(unittest.TestCase):
     def test_sign_in(self):
         self.mock_db_handler.create.return_value = 'test'
         expected_result = {'username': 'abc123', '_id':  45}
-        with app.test_request_context(path='signup/45', json=json.dumps({'username': 'abc123', 'password': '****'})):
+        with app.test_request_context(path='/account/signup/45', json={'username': 'abc123', 'password': '****'}):
             actual_result = self.user.determine_action('signup/45')
             self.assertEqual(expected_result, actual_result)
 
     def test_login(self):
         self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****'}
         expected_result = 45
-        with app.test_request_context(path='login/45', json=json.dumps({'username': 'abc123', 'password': '****'})):
+        with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
             self.user.determine_action('login/45')
             actual_result = session[45]
             self.assertEqual(expected_result, actual_result)
 
     def test_logout(self):
         self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****'}
-        with app.test_request_context(path='login/45', json=json.dumps({'username': 'abc123', 'password': '****'})):
+        with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
             self.user.determine_action('login/45')
         with app.test_request_context(path='logout/45', json=json.dumps({'username': 'abc123', 'password': '****'})):
             with self.assertRaises(KeyError):
@@ -39,21 +39,21 @@ class TestUser(unittest.TestCase):
     def test_change_password(self):
         self.mock_db_handler.update.return_value = 'test'
         expected_result = {'_id':  45}
-        with app.test_request_context(path='change_password/abc123', json=json.dumps({'id': 45, 'password': '****', 'new_password': '***'})):
+        with app.test_request_context(path='/account/change_password/abc123', json={'id': 45, 'password': '****', 'new_password': '***'}):
             actual_result = self.user.determine_action('change_password/abc123')
             self.assertEqual(expected_result, actual_result)
 
     def test_access_user(self):
         self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45}
         expected_result = {'username': 'abc123', '_id':  45}
-        with app.test_request_context(path='access_user/45'):
-            actual_result = self.user.determine_action('access_user/45')
+        with app.test_request_context(path='/account/45'):
+            actual_result = self.user.determine_action('45')
             self.assertEqual(expected_result, actual_result)
 
     def test_delete_user(self):
         self.mock_db_handler.find.return_value = 'foo'
         expected_result = {'_id':  45}
-        with app.test_request_context(path='45', method='DELETE'):
+        with app.test_request_context(path='/account/45', method='DELETE'):
             actual_result = self.user.determine_action('45')
             self.assertEqual(expected_result, actual_result)
 

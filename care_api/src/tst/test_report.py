@@ -17,14 +17,14 @@ class TestReport(unittest.TestCase):
     def test_add_report(self):
         self.mock_db_handler.create.return_value = 'test'
         expected_result = {'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}
-        with app.test_request_context('report/45', json=json.dumps({'content': 'COVID', 'timestamp': datetime.today().strftime ('%d%m%Y')})):
+        with app.test_request_context('report/45', json={'content': 'COVID', 'timestamp': datetime.today().strftime ('%d%m%Y')}):
             actual_result = self.report.add_report(45)
             self.assertEqual(expected_result, actual_result)
 
     def test_view_report(self):
         self.mock_db_handler.find.return_value = {'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}
         expected_result = {'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}
-        with app.test_request_context('report/45', json=json.dumps({'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45})):
+        with app.test_request_context('report/45', json={'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}):
             actual_result = self.report.view_report(45)
             self.assertEqual(expected_result, actual_result)
 
@@ -38,7 +38,7 @@ class TestReport(unittest.TestCase):
     def test_update_report(self):
         self.mock_db_handler.create.return_value = 'test'
         expected_result = {'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}
-        with app.test_request_context('report/45', json=json.dumps({'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45})):
+        with app.test_request_context('report/45', json={'content': 'COVID', 'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}):
             actual_result = self.report.update_report_contents(45)
             self.assertEqual(expected_result, actual_result)
 

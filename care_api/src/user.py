@@ -20,13 +20,14 @@ class User:
         if action == 'change_password':
             return self.change_password(*params)
         if request.method == 'GET':
-            return self.access_user(*params)
+            print(*params)
+            return self.access_user(action, *params)
         if request.method == 'DELETE':
             return self.delete_account(action, *params)
         abort(404)
 
     def signup(self, user_id):
-        request_data = json.loads(request.json)
+        request_data = request.json
         try:
             user_doc = {'_id': int(user_id),
                     'username': request_data['username'],
@@ -39,7 +40,7 @@ class User:
         return response_dict
 
     def login(self, login_id):
-        request_data = json.loads(request.json)
+        request_data = request.json
         try:
             query = {'_id': int(login_id)}
         except KeyError:
@@ -56,7 +57,7 @@ class User:
         return {}
 
     def change_password(self, username):
-        request_data = json.loads(request.json)
+        request_data = request.json
         try:
             query = {'_id': request_data['id']}
         except KeyError:
@@ -68,7 +69,10 @@ class User:
     def access_user(self, account_id):
         query = {'_id': int(account_id)}
         result =  self.db_handler.find('user', query)
-        return result
+        if result != None:
+            return result
+        else:
+            abort(404)
 
     def delete_account(self, account_id):
         query = {'_id': int(account_id)}

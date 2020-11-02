@@ -12,7 +12,7 @@ class Report:
 
 
     def add_report(self, report_id, timestamp = datetime.today().strftime ('%d%m%Y')):
-        request_data = json.loads(request.json)
+        request_data = request.json
         report_doc =  {"_id":report_id,
             "content":request_data['content'],
             "timestamp":timestamp
@@ -25,7 +25,7 @@ class Report:
 
 
     def update_report_contents(self, report_id):
-        request_data = json.loads(request.json)
+        request_data = request.json
         new_content = {"$set": {'content': request_data['content']}}
         self.db_handler.update('report',{"_id":report_id}, new_content)
         return request_data
