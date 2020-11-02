@@ -10,7 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 interface Column {
-    id: 'name' | 'code' | 'population' | 'size' | 'density';
+    id: 'group' | 'location' | 'time' | 'size' | 'details';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -18,11 +18,11 @@ interface Column {
   }  
 
 const columns: Column[] = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+    { id: 'group', label: 'Group', minWidth: 170 },
+    { id: 'location', label: 'Location', minWidth: 170 },
     {
-      id: 'population',
-      label: 'Population',
+      id: 'time',
+      label: 'Time',
       minWidth: 170,
       align: 'right',
       format: (value: number) => value.toLocaleString('en-US'),
@@ -35,43 +35,40 @@ const columns: Column[] = [
       format: (value: number) => value.toLocaleString('en-US'),
     },
     {
-      id: 'density',
-      label: 'Density',
+      id: 'details',
+      label: 'details',
       minWidth: 170,
-      align: 'right',
-      format: (value: number) => value.toFixed(2),
     },
 ];
   
 interface Data {
-    name: string;
-    code: string;
-    population: number;
+    group: string;
+    location: string;
+    time: number;
     size: number;
-    density: number;
+    details: string;
 }
   
-function createData(name: string, code: string, population: number, size: number): Data {
-    const density = population / size;
-    return { name, code, population, size, density };
+function createData(group: string, location: string, time: number, size: number, details: string): Data {
+    return { group, location, time, size, details };
 }
   
 const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
+    createData('India', 'IN', 1324171354, 3287263, 'd'),
+    createData('China', 'CN', 1403500365, 9596961, 'd'),
+    createData('Italy', 'IT', 60483973, 301340, 'd'),
+    createData('United States', 'US', 327167434, 9833520, 'd'),
+    createData('Canada', 'CA', 37602103, 9984670, 'd'),
+    createData('Australia', 'AU', 25475400, 7692024, 'd'),
+    createData('Germany', 'DE', 83019200, 357578, 'd'),
+    createData('Ireland', 'IE', 4857000, 70273, 'd'),
+    createData('Mexico', 'MX', 126577691, 1972550, 'd'),
+    createData('Japan', 'JP', 126317000, 377973, 'd'),
+    createData('France', 'FR', 67022000, 640679, 'd'),
+    createData('United Kingdom', 'GB', 67545757, 242495, 'd'),
+    createData('Russia', 'RU', 146793744, 17098246, 'd'),
+    createData('Nigeria', 'NG', 200962417, 923768, 'd'),
+    createData('Brazil', 'BR', 210147125, 8515767, 'd'),
 ];
   
 const useStyles = makeStyles({
@@ -117,7 +114,7 @@ export const ReportCard = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.location}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
