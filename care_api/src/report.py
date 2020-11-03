@@ -13,7 +13,7 @@ class Report:
 
     def add_report(self, report_id, timestamp = datetime.today().strftime ('%d%m%Y')):
         request_data = request.json
-        report_doc =  {"_id":report_id,
+        report_doc =  {"_id":report_id,"group":request_data['group'],
             "content":request_data['content'],
             "timestamp":timestamp
             }
