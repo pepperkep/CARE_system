@@ -23,7 +23,7 @@ class Stats:
     def num_reports_per_group(self):
         report_db = self.db_handler.db['report']
         # Aggregation by group
-        cursor = coll.aggregate([{"$group":
+        cursor = report_db.aggregate([{"$group":
                {"_id":"$group",
                "similar_groups":{"$sum":1}
                }
@@ -47,7 +47,7 @@ class Stats:
     def num_reports_per_day(self):
         report_db = self.db_handler.db['report']
         # Aggregation by timestamp
-        cursor = coll.aggregate([{"$group":
+        cursor = report_db.aggregate([{"$group":
                {"_id":"$timestamp",
                "similar_groups":{"$sum":1}
                }
