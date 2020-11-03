@@ -26,7 +26,7 @@ class Report:
 
     def update_report_contents(self, report_id):
         request_data = request.json
-        new_content = {"$set": {'content': request_data['content']}}
+        new_content = {"$set": {'content': request_data['content'],'group' : request_data['group']}}
         self.db_handler.update('report',{"_id":report_id}, new_content)
         return request_data
 
