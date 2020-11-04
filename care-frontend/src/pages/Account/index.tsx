@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { SignInContext } from '../../context/SigninContext';
-import { RegisterForm } from '../../components';
+import { RegisterForm, ReportCard } from '../../components';
 
 import './account.css';
 
@@ -9,7 +9,10 @@ export const Account = () => {
 
     if (signedIn) {
         return (
-            <div>this is account page</div>
+            <div className='account-base'>
+                <h1>Hello Kefan</h1>
+                <ReportCard />
+            </div>
         )
     }
 
