@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
 
 interface Column {
     id: 'group' | 'location' | 'time' | 'details';
@@ -87,6 +88,16 @@ export const ReportCard = () => {
 
   return (
     <Paper className={classes.root}>
+        <Button variant="contained">Default</Button>
+            <Button variant="contained" color="primary">
+                Primary
+            </Button>
+            <Button variant="contained" color="secondary">
+                Secondary
+            </Button>
+            <Button variant="contained" color="primary" href="#contained-buttons">
+                Link
+            </Button>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
