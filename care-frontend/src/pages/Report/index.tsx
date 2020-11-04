@@ -1,9 +1,11 @@
 import React from 'react'
+import { ReportCard } from '../../components'
+
 
 export const Report = () => {
     return (
         <div>
-            this is report
+            <ReportCard/>
         </div>
     )
 }
