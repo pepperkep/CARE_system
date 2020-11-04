@@ -8,6 +8,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+
+import './ReportsCard.css';
 
 interface Column {
     id: 'group' | 'location' | 'time' | 'details';
@@ -43,9 +47,9 @@ interface Data {
 function createData(group: string, location: string, time: number, details: string): Data {
     return { group, location, time, details };
 }
-  
+
 const rows = [
-    createData('Soccer', 'DiSanto', 12, 'details'),
+    createData('Soccer', 'DiSanto', 12, 'This class will contain the attributes required for a report that is being made to the system. It will contain attributes like timestamps for when the report was made, the location the report should be tied to ,the user who the report should be linked to, the group that the report is being made against, the actual text that is the body of the report. It will implement the functionality of functions meant to facilitate the creation of, the updating of, and the deletion of reports made by users. This is represented by functions like Report.Add, which allows users to add reports, Report.Update, which allows users to edit existing reports, and Report.Add.Date, which will ensure that the times that a report was made will be accounted for when a report was made. This class will also fulfill the functional requirement for the spam detection system Spam.verify. This will be implemented via a method to detect if a specific report is spam. This will be done by comparing it to recent reports from the user and for that group and checking for similarity in the message of the report.'),
     createData('Basketball', 'Veale', 11, 'details'),
     createData('Volleyball', 'Adelbert', 8, 'details'),
     createData('Tennis', 'South Side', 7, 'details'),
@@ -87,6 +91,11 @@ export const ReportCard = () => {
 
   return (
     <Paper className={classes.root}>
+      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" className='reportcard-base'>
+        <Button>New</Button>
+        <Button>Edit</Button>
+        <Button>Remove</Button>
+      </ButtonGroup>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

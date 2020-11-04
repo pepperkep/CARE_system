@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { SignInContext } from '../../context/SigninContext';
+import { RegisterForm, ReportCard } from '../../components';
+
+import './account.css';
 
 export const Account = () => {
+    const { signedIn, setSignedIn } = useContext(SignInContext);
+
+    if (signedIn) {
+        return (
+            <div className='account-base'>
+                <h1>Hello Kefan</h1>
+                <ReportCard />
+            </div>
+        )
+    }
+
     return (
-        <div>
-            this is account
+        <div className='account-base'>
+            <RegisterForm onSignIn={() => { setSignedIn(true) }} />
         </div>
-    )
+    );
 }
