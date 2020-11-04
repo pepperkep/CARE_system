@@ -11,6 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
+import './ReportsCard.css';
+
 interface Column {
     id: 'group' | 'location' | 'time' | 'details';
     label: string;
@@ -89,7 +91,7 @@ export const ReportCard = () => {
 
   return (
     <Paper className={classes.root}>
-      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group" className='reportcard-base'>
         <Button>New</Button>
         <Button>Edit</Button>
         <Button>Remove</Button>

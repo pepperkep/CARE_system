@@ -1,0 +1,17 @@
+.reportcard-base {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 2.5rem;
+    margin-bottom: .5rem;
+    float: right;
+}
+
+.reportcard-click {
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2.5rem;
+}
