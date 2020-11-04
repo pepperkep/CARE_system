@@ -8,15 +8,17 @@ class Stats:
     def __init__(self, db_handler):
         self.db_handler = db_handler
 
+
     def total_reports(self):
         report_db = self.db_handler.db['report']
+        print(self.db_handler.find_all(report_db,{'_id':  45}))
         # Aggregation of all reports
         cursor = report_db.aggregate([{"$group":
                {"_id":"$None",
                "total reports":{"$sum": 1}
                }
                }])
-
+        print(len(cursor))
         for document in cursor:
              print(document)
 
