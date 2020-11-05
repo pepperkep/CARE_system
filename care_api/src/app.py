@@ -17,21 +17,38 @@ def update_account(action):
 
 @care_app.route('/group/<int:group_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def change_groups(group_id):
-    pass
+    group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    if request.method == 'POST':
+        return group.add_group(group_id)
+    if request.method == 'PUT':
+        return group.update_group(group_id)
+    if request.method == 'GET':
+        return group.view_group(group_id)
+    if request.method == 'DELETE':
+        return group.delete_group(group_id)
 
 @care_app.route('/group/recommend/<int:recommend_id>', methods=['POST'])
 def add_recommendation(recommend_id):
-    pass
+    group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    return group.recommend_group(recommend_id)
 
 @care_app.route('/group/recommend-approve/<int:recommend_id>', methods=['POST'])
 def approve_recommendation(recommend_id):
     pass
 
-@care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE']) 
+@care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def update_reports(report_id):
-    pass
+    report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    if request.method == 'POST':
+        return report.add_report(report_id)
+    if request.method == 'PUT':
+        return report.update_report_contents(report_id)
+    if request.method == 'GET':
+        return report.view_report(report_id)
+    if request.method == 'DELETE':
+        return report.delete_report(report_id)
 
-@care_app.route('/report/<path:view_criteria>', methods=['GET']) 
+@care_app.route('/report/<path:view_criteria>', methods=['GET'])
 def view_reports_by_criteria(view_criteria):
     pass
 
