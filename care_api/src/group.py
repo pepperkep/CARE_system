@@ -38,5 +38,5 @@ class Group:
             "name":request_data['name'],
             "description":request_data['description']
             }
-        self.db_handler.create('group',recommend_doc)
+        self.db_handler.create('recommendation',recommend_doc)
         return recommend_doc
