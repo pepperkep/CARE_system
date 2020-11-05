@@ -60,7 +60,7 @@ class User:
 
     def is_logged_in(self):
         if 'id' in session:
-            if time.time() - session['timestamp'] > login_time:
+            if time.time() - session['timestamp'] > self.login_time:
                 self.logout(user_id)
                 return False
             else:

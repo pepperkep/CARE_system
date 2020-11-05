@@ -28,6 +28,22 @@ class TestUser(unittest.TestCase):
             actual_result = session['id']
             self.assertEqual(expected_result, actual_result)
 
+    def test_login(self):
+        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****', 'is_admin': False}
+        expected_result = True
+        with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
+            self.user.determine_action('login/45')
+            actual_result = self.user.is_logged_in()
+            self.assertEqual(expected_result, actual_result)
+
+    def test_is_authorized(self):
+        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****', 'is_admin': True}
+        expected_result = True
+        with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
+            self.user.determine_action('login/45')
+            actual_result = self.user.is_authorized()
+            self.assertEqual(expected_result, actual_result)
+
     def test_logout(self):
         self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****', 'is_admin': False}
         with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
