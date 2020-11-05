@@ -1,10 +1,12 @@
 from flask import request, abort, json, session
 from database.database_handler import DatabaseHandler
+import time
 
 class User:
 
-    def __init__(self, db_handler):
+    def __init__(self, db_handler, login_time=5000):
         self.db_handler = db_handler
+        self.login_time = login_time
 
     def determine_action(self, path):
        
@@ -31,7 +33,8 @@ class User:
         try:
             user_doc = {'_id': int(user_id),
                     'username': request_data['username'],
-                    'password': request_data['password']}
+                    'password': request_data['password'],
+                    'is_admin': False}
         except KeyError:
             abort(400)
         self.db_handler.create('user', user_doc)
@@ -47,13 +50,32 @@ class User:
             abort(400)
         result = self.db_handler.find('user', query)
         if request_data['username'] == result['username'] and request_data['password'] == result['password']:
-            session[int(login_id)] = int(login_id)
+            session['id'] = int(login_id)
+            session['username'] = request_data['username']
+            session['is_admin']  = result['is_admin']
+            session['timestamp'] = time.time()
         else:
             abort(401)
         return {}
 
-    def logout(self, login_id):
-        session.pop(int(login_id), None)
+    def is_logged_in(self):
+        if 'id' in session:
+            if time.time() - session['timestamp'] > login_time:
+                self.logout(user_id)
+                return False
+            else:
+                return True
+        return False
+
+    def is_authorized(self):
+        if self.is_logged_in():
+            return session['is_admin']
+
+    def logout(self):
+        session.pop('id', None)
+        session.pop('username', None)
+        session.pop('is_admin', None)
+        session.pop('timestamp', None)
         return {}
 
     def change_password(self, username):

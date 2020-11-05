@@ -15,24 +15,24 @@ class TestUser(unittest.TestCase):
 
     def test_sign_in(self):
         self.mock_db_handler.create.return_value = 'test'
-        expected_result = {'username': 'abc123', '_id':  45}
+        expected_result = {'username': 'abc123', '_id':  45, 'is_admin': False}
         with app.test_request_context(path='/account/signup/45', json={'username': 'abc123', 'password': '****'}):
             actual_result = self.user.determine_action('signup/45')
             self.assertEqual(expected_result, actual_result)
 
     def test_login(self):
-        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****'}
+        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****', 'is_admin': False}
         expected_result = 45
         with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
             self.user.determine_action('login/45')
-            actual_result = session[45]
+            actual_result = session['id']
             self.assertEqual(expected_result, actual_result)
 
     def test_logout(self):
-        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****'}
+        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'password': '****', 'is_admin': False}
         with app.test_request_context(path='/account/login/45', json={'username': 'abc123', 'password': '****'}):
             self.user.determine_action('login/45')
-        with app.test_request_context(path='logout/45', json=json.dumps({'username': 'abc123', 'password': '****'})):
+        with app.test_request_context(path='logout', json=json.dumps({'username': 'abc123', 'password': '****'})):
             with self.assertRaises(KeyError):
                 session[45]
 
@@ -44,8 +44,8 @@ class TestUser(unittest.TestCase):
             self.assertEqual(expected_result, actual_result)
 
     def test_access_user(self):
-        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45}
-        expected_result = {'username': 'abc123', '_id':  45}
+        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'is_admin': False}
+        expected_result = {'username': 'abc123', '_id':  45, 'is_admin': False}
         with app.test_request_context(path='/account/45'):
             actual_result = self.user.determine_action('45')
             self.assertEqual(expected_result, actual_result)
