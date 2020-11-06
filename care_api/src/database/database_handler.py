@@ -41,7 +41,7 @@ class DatabaseHandler:
         return self.db[collection_name].insert_one(doc)
 
     def update(self, collection_name, selector, doc):
-        return self.db[collection_name].replace_one(selector, doc).modified_count
+        return self.db[collection_name].update_one(selector, doc).modified_count
 
     def delete(self, collection_name, selector):
         return self.db[collection_name].delete_one(selector).deleted_count

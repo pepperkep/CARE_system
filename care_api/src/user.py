@@ -91,6 +91,7 @@ class User:
     def access_user(self, account_id):
         query = {'_id': int(account_id)}
         result =  self.db_handler.find('user', query)
+        del result['password']
         if result != None:
             return result
         else:
