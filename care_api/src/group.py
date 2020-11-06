@@ -11,7 +11,7 @@ class Group:
 
     def add_group(self, group_id):
         request_data = request.json
-        group_doc =  {"_id":group_id,
+        group_doc =  {"_id":int(group_id),
             "name":request_data['name'],
             "description":request_data['description']
             }
@@ -19,14 +19,14 @@ class Group:
         return group_doc
 
     def delete_group(self,group_id):
-        self.db_handler.delete('group', {"_id":group_id})
+        self.db_handler.delete('group', {"_id":int(group_id)})
 
 
     def update_group(self, group_id):
         request_data = request.json
         print(request_data["name"])
         new_val = {"$set": {'name': request_data['name'],'description':request_data['description']}}
-        self.db_handler.update('group',{"_id":group_id}, new_val)
+        self.db_handler.update('group',{"_id":int(group_id)}, new_val)
         return request_data
 
     def view_group(self,view_id):
@@ -34,7 +34,7 @@ class Group:
 
     def recommend_group(self, recommend_id):
         request_data = request.json
-        recommend_doc =  {"_id":recommend_id,
+        recommend_doc =  {"_id":int(recommend_id),
             "name":request_data['name'],
             "description":request_data['description']
             }

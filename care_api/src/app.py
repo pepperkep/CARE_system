@@ -1,5 +1,7 @@
 from flask import Flask, request
 from user import User
+from group import Group
+from report import Report
 from configparser import ConfigParser
 from database.database_handler import DatabaseHandler
 
