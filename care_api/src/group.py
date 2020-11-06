@@ -31,3 +31,12 @@ class Group:
 
     def view_group(self,view_id):
         return self.db_handler.find('group',{"_id":int(view_id)})
+
+    def recommend_group(self, recommend_id):
+        request_data = request.json
+        recommend_doc =  {"_id":recommend_id,
+            "name":request_data['name'],
+            "description":request_data['description']
+            }
+        self.db_handler.create('recommendation',recommend_doc)
+        return recommend_doc

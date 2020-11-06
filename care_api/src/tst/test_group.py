@@ -41,6 +41,13 @@ class TestGroup(unittest.TestCase):
             actual_result = self.group.update_group(45)
             self.assertEqual(expected_result, actual_result)
 
+    def test_recommend_group(self):
+        self.mock_db_handler.create.return_value = 'test'
+        expected_result = {'name': 'marx', 'description':'group','_id':  45}
+        with app.test_request_context('group/45', json={'name': 'marx', 'description': 'group'}):
+            actual_result = self.group.recommend_group(45)
+            self.assertEqual(expected_result, actual_result)
+
 
 
 if __name__ == '__main__':
