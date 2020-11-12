@@ -3,6 +3,9 @@ import requests
 import json
 import pprint
 from user import User
+from group import Group
+from report import Report
+from stats import Stats
 from configparser import ConfigParser
 from database.database_handler import DatabaseHandler
 
@@ -53,7 +56,12 @@ def update_reports(report_id):
 
 @care_app.route('/report/<path:view_criteria>', methods=['GET'])
 def view_reports_by_criteria(view_criteria):
-    pass
+    stats = Stats(self.mock_db_handler)
+    if view_criteria == 'all':
+        return stats.get_all_reports()
+    else:
+        return stats.get_reports_by_group(view_criteria)
+
 
 @care_app.route('/report/spam/<int:report_id>', methods=['POST'])
 def is_report_spam(report_id):
