@@ -40,7 +40,8 @@ def add_recommendation(recommend_id):
 
 @care_app.route('/group/recommend-approve/<int:recommend_id>', methods=['POST'])
 def approve_recommendation(recommend_id):
-    pass
+    group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    return group.add_group(recommend_id)
 
 @care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def update_reports(report_id):
