@@ -56,7 +56,7 @@ def update_reports(report_id):
 
 @care_app.route('/report/<path:view_criteria>', methods=['GET'])
 def view_reports_by_criteria(view_criteria):
-    stats = Stats(self.mock_db_handler)
+    stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))
     if view_criteria == 'all':
         return stats.get_all_reports()
     else:
