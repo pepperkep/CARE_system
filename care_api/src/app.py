@@ -1,7 +1,11 @@
 from flask import Flask, request
+import requests
+import json
+import pprint
 from user import User
 from group import Group
 from report import Report
+from stats import Stats
 from configparser import ConfigParser
 from database.database_handler import DatabaseHandler
 
@@ -36,7 +40,8 @@ def add_recommendation(recommend_id):
 
 @care_app.route('/group/recommend-approve/<int:recommend_id>', methods=['POST'])
 def approve_recommendation(recommend_id):
-    pass
+    group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    return group.add_group(recommend_id)
 
 @care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def update_reports(report_id):
@@ -52,11 +57,31 @@ def update_reports(report_id):
 
 @care_app.route('/report/<path:view_criteria>', methods=['GET'])
 def view_reports_by_criteria(view_criteria):
-    pass
+    stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    if view_criteria == 'all':
+        return stats.get_all_reports()
+    else:
+        return stats.get_reports_by_group(view_criteria)
+
 
 @care_app.route('/report/spam/<int:report_id>', methods=['POST'])
 def is_report_spam(report_id):
-    pass
+    report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    report_doc = report.view_report(report_id)
+    api_url = "https://plino.herokuapp.com/api/v1/classify/"
+    payload = \
+    {
+    'email_text': report_doc.get('content')
+    }
+    headers = {'content-type': 'application/json'}
+    # query spam detection API
+    response = requests.post(api_url, data=json.dumps(payload), headers=headers)
+    responses= response.json()
+    if responses['email_class'] == 'spam':
+        return True
+    else:
+        return False
+
 
 @care_app.route('/faq/<int:question_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def update_faq(question_id):

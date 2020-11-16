@@ -1,11 +1,13 @@
-import React from 'react'
-import { ReportCard } from '../../components'
+import React, { useState } from 'react'
+import { ReportCard, GroupForm } from '../../components'
 
 
 export const Report = () => {
+    const [] = useState<boolean>(true);
     return (
         <div>
-            <ReportCard/>
+            <GroupForm />
+            <ReportCard />
         </div>
     )
 }
