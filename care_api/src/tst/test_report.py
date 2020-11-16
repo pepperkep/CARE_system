@@ -14,13 +14,6 @@ class TestReport(unittest.TestCase):
         self.mock_db_handler = MagicMock()
         self.report = Report(self.mock_db_handler)
 
-    def test_add_report(self):
-        self.mock_db_handler.create.return_value = 'test'
-        expected_result = {'content': 'COVID','group': 'Lacrosse' ,'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}
-        with app.test_request_context('report/45', json={'content': 'COVID','group' : 'Lacrosse' ,'timestamp': datetime.today().strftime ('%d%m%Y')}):
-            actual_result = self.report.add_report(45)
-            self.assertEqual(expected_result, actual_result)
-
     def test_view_report(self):
         self.mock_db_handler.find.return_value = {'content': 'COVID','group' : 'Lacrosse' ,'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}
         expected_result = {'content': 'COVID', 'group' : 'Lacrosse' ,'timestamp':datetime.today().strftime ('%d%m%Y'),'_id':  45}

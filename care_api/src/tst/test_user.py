@@ -59,13 +59,6 @@ class TestUser(unittest.TestCase):
             actual_result = self.user.determine_action('change_password/abc123')
             self.assertEqual(expected_result, actual_result)
 
-    def test_access_user(self):
-        self.mock_db_handler.find.return_value = {'username': 'abc123', '_id':  45, 'is_admin': False}
-        expected_result = {'username': 'abc123', '_id':  45, 'is_admin': False}
-        with app.test_request_context(path='/account/45'):
-            actual_result = self.user.determine_action('45')
-            self.assertEqual(expected_result, actual_result)
-
     def test_delete_user(self):
         self.mock_db_handler.find.return_value = 'foo'
         expected_result = {'_id':  45}
