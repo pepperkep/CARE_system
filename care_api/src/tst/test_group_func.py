@@ -16,7 +16,6 @@ class TestGroupFunc(unittest.TestCase):
         with flask_app.test_request_context('group/27', method='DELETE'):
             src.app.change_groups('27')
 
-
     def test_add_group_func(self):
         expected_result = {'name': 'marx', 'description':'group','_id':  46}
         with flask_app.test_request_context('group/46', json={'name': 'marx', 'description': 'group'}, method = 'POST'):
@@ -40,6 +39,8 @@ class TestGroupFunc(unittest.TestCase):
         with flask_app.test_request_context('group/27', json={'name': 'marx', 'description': 'group'}):
             actual_result = src.app.add_recommendation('27')
             self.assertEqual(expected_result, actual_result)
+        with flask_app.test_request_context('group/recommend-approve/27', json={'accept': False}, method='POST'):
+            src.app.approve_recommendation('27')
 
 
 if __name__ == '__main__':

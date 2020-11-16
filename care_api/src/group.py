@@ -40,3 +40,21 @@ class Group:
             }
         self.db_handler.create('recommendation',recommend_doc)
         return recommend_doc
+
+    def recommendation_action(self, recommend_id):
+        recommendation = self.db_handler.find('recommendation', {'_id': int(recommend_id)})
+        if recommendation is not None:
+            self.db_handler.delete('recommendation', {'_id': int(recommend_id)})
+            if bool(request.json['accept']):
+                name = recommendation['name'] if 'name' not in request.json else request.json['name']
+                description = recommendation['description'] if 'description' not in request.json else request.json['description']
+                group_doc = {"name": name, "description": description}
+                create_response = self.db_handler.create('group', group_doc)
+                create_response['accept'] = True
+                return create_response
+            else:
+                return {'accept': False}
+        else:
+            abort(404)
+
+            
