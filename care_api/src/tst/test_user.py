@@ -13,11 +13,11 @@ class TestUser(unittest.TestCase):
         self.mock_db_handler = MagicMock()
         self.user = User(self.mock_db_handler)
 
-    def test_sign_in(self):
-        self.mock_db_handler.create.return_value = 'test'
+    def test_sign_up(self):
+        self.mock_db_handler.create.return_value = {'username': 'abc123', '_id':  45, 'password': '***', 'is_admin': False}
         expected_result = {'username': 'abc123', '_id':  45, 'is_admin': False}
-        with app.test_request_context(path='/account/signup/45', json={'username': 'abc123', 'password': '****'}):
-            actual_result = self.user.determine_action('signup/45')
+        with app.test_request_context(path='/account/signup', json={'username': 'abc123', 'password': '****'}):
+            actual_result = self.user.determine_action('signup')
             self.assertEqual(expected_result, actual_result)
 
     def test_login(self):

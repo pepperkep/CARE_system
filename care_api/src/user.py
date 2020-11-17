@@ -9,7 +9,6 @@ class User:
         self.login_time = login_time
 
     def determine_action(self, path):
-       
         path_list = path.split("/")
         params = tuple(path_list[1:])
         action = path_list[0]
@@ -28,24 +27,30 @@ class User:
             return self.delete_account(action, *params)
         abort(404)
 
-    def signup(self, user_id):
+    def signup(self, username):
         request_data = request.json
+        largest_id = self.db_handler.get_max('user', 'user_id')
+        if largest_id is None:
+            largest_id = -1 
         try:
-            user_doc = {'_id': int(user_id),
-                    'username': request_data['username'],
+            user_doc = {
+                    'user_id': largest_id + 1,
+                    'username': str(username),
                     'password': request_data['password'],
                     'is_admin': False}
         except KeyError:
             abort(400)
         self.db_handler.create('user', user_doc)
-        response_dict = dict(user_doc)
+        response_dict = user_doc
         del response_dict['password']
+        del response_dict['_id']
+        print(response_dict)
         return response_dict
 
     def login(self, login_id):
         request_data = request.json
         try:
-            query = {'_id': int(login_id)}
+            query = {'user_id': int(login_id)}
         except KeyError:
             abort(400)
         result = self.db_handler.find('user', query)
@@ -81,7 +86,7 @@ class User:
     def change_password(self, username):
         request_data = request.json
         try:
-            query = {'_id': request_data['id']}
+            query = {'user_id': request_data['id']}
         except KeyError:
             abort(400)
         change = { "$set": {'password': request_data['new_password']}}
@@ -89,7 +94,7 @@ class User:
         return query
         
     def access_user(self, account_id):
-        query = {'_id': int(account_id)}
+        query = {'user_id': int(account_id)}
         result =  self.db_handler.find('user', query)
         del result['password']
         if result != None:
@@ -98,6 +103,6 @@ class User:
             abort(404)
 
     def delete_account(self, account_id):
-        query = {'_id': int(account_id)}
+        query = {'user_id': int(account_id)}
         self.db_handler.delete('user', query)
         return query

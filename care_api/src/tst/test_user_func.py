@@ -9,8 +9,8 @@ flask_app.secret_key = 123
 class TestUserFunc(unittest.TestCase):
 
     def setUp(self):
-        with flask_app.test_request_context(path='/account/signup/5', json={'username': 'abc123', 'password': '****'}):
-            src.app.update_account('signup/5')
+        with flask_app.test_request_context(path='/account/signup', json={'username': 'abc123', 'password': '****'}):
+            src.app.update_account('signup')
 
     def tearDown(self):
         with flask_app.test_request_context(path='/account/5', method='DELETE'):
@@ -21,8 +21,8 @@ class TestUserFunc(unittest.TestCase):
 
     def test_sign_up(self):
         expected_result = {'username': 'abc123', '_id':  46, 'is_admin': False}
-        with flask_app.test_request_context(path='/account/signup/46', json={'username': 'abc123', 'password': '****'}):
-            actual_result = src.app.update_account('signup/46')
+        with flask_app.test_request_context(path='/account/signup', json={'username': 'abc123', 'password': '****'}):
+            actual_result = src.app.update_account('signup')
             self.assertEqual(expected_result, actual_result)
 
     def test_login(self):

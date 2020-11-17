@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 from pymongo.errors import ConnectionFailure
 from configparser import ConfigParser
 from urllib.parse import quote_plus
@@ -13,7 +13,6 @@ class DatabaseHandler:
 
     def check_connection(self):
         try:
-            # The ismaster command is cheap and does not require auth.
             self.db_client.admin.command('ismaster')
             return True
         except ConnectionFailure:
@@ -42,6 +41,9 @@ class DatabaseHandler:
 
     def update(self, collection_name, selector, doc):
         return self.db[collection_name].update_one(selector, doc).modified_count
+
+    def get_max(self, collection_name, field_name):
+        return self.db[collection_name].find().sort([(field_name, -1)]).limit(1)[0][field_name]
 
     def delete(self, collection_name, selector):
         return self.db[collection_name].delete_one(selector).deleted_count

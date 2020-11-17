@@ -11,7 +11,7 @@ class Group:
 
     def add_group(self, group_id):
         request_data = request.json
-        group_doc =  {"_id":int(group_id),
+        group_doc =  {"group_id":int(group_id),
             "name":request_data['name'],
             "description":request_data['description']
             }
@@ -19,22 +19,21 @@ class Group:
         return group_doc
 
     def delete_group(self,group_id):
-        self.db_handler.delete('group', {"_id":int(group_id)})
+        self.db_handler.delete('group', {"group_id":int(group_id)})
 
 
     def update_group(self, group_id):
         request_data = request.json
-        print(request_data["name"])
         new_val = {"$set": {'name': request_data['name'],'description':request_data['description']}}
-        self.db_handler.update('group',{"_id":int(group_id)}, new_val)
+        self.db_handler.update('group',{"group_id":int(group_id)}, new_val)
         return request_data
 
     def view_group(self,view_id):
-        return self.db_handler.find('group',{"_id":int(view_id)})
+        return self.db_handler.find('group',{"group_id":int(view_id)})
 
     def recommend_group(self, recommend_id):
         request_data = request.json
-        recommend_doc =  {"_id":int(recommend_id),
+        recommend_doc =  {"group_id":int(recommend_id),
             "name":request_data['name'],
             "description":request_data['description']
             }
@@ -42,9 +41,9 @@ class Group:
         return recommend_doc
 
     def recommendation_action(self, recommend_id):
-        recommendation = self.db_handler.find('recommendation', {'_id': int(recommend_id)})
+        recommendation = self.db_handler.find('recommendation', {'recommendation_id': int(recommend_id)})
         if recommendation is not None:
-            self.db_handler.delete('recommendation', {'_id': int(recommend_id)})
+            self.db_handler.delete('recommendation', {'recommendation_id': int(recommend_id)})
             if bool(request.json['accept']):
                 name = recommendation['name'] if 'name' not in request.json else request.json['name']
                 description = recommendation['description'] if 'description' not in request.json else request.json['description']
