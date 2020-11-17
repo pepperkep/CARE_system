@@ -91,5 +91,5 @@ def update_faq(question_id):
     pass
 
 @care_app.route('/faq/request/<int:request_id>', methods=['GET', 'POST', 'DELETE'])
-def mandage_faq_request(request_id):
+def manage_faq_request(request_id):
     pass

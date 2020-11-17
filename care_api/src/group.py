@@ -61,7 +61,7 @@ class Group:
                 largest_id = self.db_handler.get_max('group', 'group_id')
                 if largest_id is None:
                     largest_id = -1
-                group_doc = {"group_id", largest_id + 1, "name": name, "description": description}
+                group_doc = {"group_id": largest_id + 1, "name": name, "description": description}
                 create_response = self.db_handler.create('group', group_doc)
                 create_response['accept'] = True
                 return create_response
