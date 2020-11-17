@@ -45,7 +45,6 @@ class User:
         response_dict = user_doc
         del response_dict['password']
         del response_dict['_id']
-        print(response_dict)
         return response_dict
 
     def login(self, login_id):
@@ -98,6 +97,7 @@ class User:
         query = {'user_id': int(account_id)}
         result =  self.db_handler.find('user', query)
         del result['password']
+        del result['_id']
         if result != None:
             return result
         else:

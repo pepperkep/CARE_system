@@ -16,6 +16,7 @@ class Group:
             "description":request_data['description']
             }
         self.db_handler.create('group',group_doc)
+        del group_doc['id']
         return group_doc
 
     def delete_group(self,group_id):
@@ -38,6 +39,7 @@ class Group:
             "description":request_data['description']
             }
         self.db_handler.create('recommendation',recommend_doc)
+        del recommend_doc['_id']
         return recommend_doc
 
     def recommendation_action(self, recommend_id):
@@ -47,7 +49,11 @@ class Group:
             if bool(request.json['accept']):
                 name = recommendation['name'] if 'name' not in request.json else request.json['name']
                 description = recommendation['description'] if 'description' not in request.json else request.json['description']
-                group_doc = {"name": name, "description": description}
+                self.db_handler.gurantee_index('group', 'group_id')
+                largest_id = self.db_handler.get_max('group', 'group_id')
+                if largest_id is None:
+                    largest_id = -1
+                group_doc = {"group_id", largest_id + 1, "name": name, "description": description}
                 create_response = self.db_handler.create('group', group_doc)
                 create_response['accept'] = True
                 return create_response
