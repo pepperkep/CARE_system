@@ -18,7 +18,7 @@ class Group:
             "description":request_data['description']
             }
         self.db_handler.create('group',group_doc)
-        del group_doc['id']
+        del group_doc['_id']
         return group_doc
 
     def delete_group(self,group_id):

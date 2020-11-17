@@ -3,8 +3,6 @@ from datetime import datetime
 from database.database_handler import DatabaseHandler
 
 
-
-
 class Report:
 
     def __init__(self, db_handler):
@@ -23,7 +21,6 @@ class Report:
                 "group":request_data['group'],
                 "content":request_data['content'],
                 "timestamp":timestamp,
-                "report":request_data['report'],
                 "user_id":session["id"]
                 }
             self.db_handler.create('report', report_doc)
