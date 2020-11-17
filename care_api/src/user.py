@@ -29,6 +29,7 @@ class User:
 
     def signup(self, username):
         request_data = request.json
+        self.db_handler.gurantee_index('user', 'user_id')
         largest_id = self.db_handler.get_max('user', 'user_id')
         if largest_id is None:
             largest_id = -1 

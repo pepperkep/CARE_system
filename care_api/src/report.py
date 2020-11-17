@@ -11,14 +11,24 @@ class Report:
         self.db_handler = db_handler
 
 
-    def add_report(self, report_id, timestamp = datetime.today().strftime ('%d%m%Y')):
+    def add_report(self, timestamp = datetime.today().strftime ('%d%m%Y')):
         request_data = request.json
-        report_doc =  {"report_id":int(report_id), "group":request_data['group'],
-            "content":request_data['content'],
-            "timestamp":timestamp,
-            "report":request_data['report']
-            }
-        self.db_handler.create('report', report_doc)
+        self.db_handler.gurantee_index('report', 'report_id')
+        largest_id = self.db_handler.get_max('report', 'report_id')
+        if largest_id is None:
+            largest_id = -1
+
+        try:
+            report_doc =  {"report_id":int(largest_id) + 1,
+                "group":request_data['group'],
+                "content":request_data['content'],
+                "timestamp":timestamp,
+                "report":request_data['report']
+                }
+            self.db_handler.create('report', report_doc)
+        except KeyError:
+            abort(400)
+        del report_doc['_id']
         return report_doc
 
     def delete_report(self, report_id):
@@ -34,4 +44,6 @@ class Report:
 
 
     def view_report(self, view_id):
-        return self.db_handler.find('report', {"report_id":int(view_id)})
+        report = self.db_handler.find('report', {"report_id":int(view_id)})
+        del report['_id']
+        return report

@@ -30,6 +30,9 @@ class DatabaseHandler:
         self.db_client.close()
         self.is_connected = False
 
+    def gurantee_index(self, collection_name, index_name):
+        self.db[collection_name].create_index(index_name)
+
     def find_all(self, collection_name, selector):
         return self.db[collection_name].find(selector)
 
@@ -43,7 +46,11 @@ class DatabaseHandler:
         return self.db[collection_name].update_one(selector, doc).modified_count
 
     def get_max(self, collection_name, field_name):
-        return self.db[collection_name].find().sort([(field_name, -1)]).limit(1)[0][field_name]
+        max_list = self.db[collection_name].find().sort([(field_name, -1)]).limit(1)
+        if max_list.count() > 0:
+            return max_list[0][field_name]
+        else:
+            return None
 
     def delete(self, collection_name, selector):
         return self.db[collection_name].delete_one(selector).deleted_count

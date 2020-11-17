@@ -43,11 +43,14 @@ def approve_recommendation(recommend_id):
     group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
     return group.recommendation_action(recommend_id)
 
-@care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
+@care_app.route('/report', methods=['POST'])
+def add_report():
+    report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    return report.add_report()
+
+@care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'DELETE'])
 def update_reports(report_id):
     report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
-    if request.method == 'POST':
-        return report.add_report(report_id)
     if request.method == 'PUT':
         return report.update_report_contents(report_id)
     if request.method == 'GET':
