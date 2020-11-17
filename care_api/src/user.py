@@ -84,14 +84,16 @@ class User:
         return {}
 
     def change_password(self, username):
-        request_data = request.json
-        try:
-            query = {'user_id': request_data['id']}
-        except KeyError:
-            abort(400)
-        change = { "$set": {'password': request_data['new_password']}}
-        self.db_handler.update('user', query, change)
-        return query
+        if session['username'] == username:
+            request_data = request.json
+            try:
+                query = {'user_id': request_data['id']}
+            except KeyError:
+                abort(400)
+            change = { "$set": {'password': request_data['new_password']}}
+            self.db_handler.update('user', query, change)
+            return query
+        abort(403)
         
     def access_user(self, account_id):
         query = {'user_id': int(account_id)}
@@ -104,6 +106,8 @@ class User:
             abort(404)
 
     def delete_account(self, account_id):
-        query = {'user_id': int(account_id)}
-        self.db_handler.delete('user', query)
-        return query
+        if session['is_admin'] or session['id'] == account_id:
+            query = {'user_id': int(account_id)}
+            self.db_handler.delete('user', query)
+            return query
+        abort(403)

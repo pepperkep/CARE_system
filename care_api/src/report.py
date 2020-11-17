@@ -23,7 +23,8 @@ class Report:
                 "group":request_data['group'],
                 "content":request_data['content'],
                 "timestamp":timestamp,
-                "report":request_data['report']
+                "report":request_data['report'],
+                "user_id":session["id"]
                 }
             self.db_handler.create('report', report_doc)
         except KeyError:
@@ -32,11 +33,18 @@ class Report:
         return report_doc
 
     def delete_report(self, report_id):
+        if not session['is_admin']:
+            abort(403)
         self.db_handler.delete('report', {"report_id": int(report_id)})
         return None
 
 
     def update_report_contents(self, report_id):
+        report = self.db_handler.find('report', {"report_id":int(report_id)})
+        if report is None:
+            abort(404)
+        if not session['is_admin'] and not report['user_id'] == session['id']:
+            abort(403)
         request_data = request.json
         new_content = {"$set": {'content': request_data['content'],'group' : request_data['group']}}
         self.db_handler.update('report',{"report_id":int(report_id)}, new_content)
