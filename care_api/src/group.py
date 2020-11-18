@@ -36,7 +36,9 @@ class Group:
         return request_data
 
     def view_group(self,view_id):
-        return self.db_handler.find('group',{"group_id":int(view_id)})
+        response = self.db_handler.find('group',{"group_id":int(view_id)})
+        del response['_id']
+        return response
 
     def recommend_group(self, recommend_id):
         request_data = request.json
