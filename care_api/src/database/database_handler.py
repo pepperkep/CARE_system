@@ -33,8 +33,8 @@ class DatabaseHandler:
     def gurantee_index(self, collection_name, index_name):
         self.db[collection_name].create_index(index_name)
 
-    def find_all(self, collection_name, selector):
-        return self.db[collection_name].find(selector)
+    def find_all(self, collection_name, selector, included_fields=None):
+        return list(self.db[collection_name].find(selector, included_fields))
 
     def find(self, collection_name, selector):
         return self.db[collection_name].find_one(selector)

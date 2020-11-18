@@ -15,7 +15,6 @@ care_app = Flask('care_api')
 config_path = 'config/config.ini'
 config = ConfigParser()
 config.read(config_path)
-print(config.sections())
 care_app.secret_key = config['app']['secret_key']
 
 @care_app.route('/account/<path:action>', methods=['GET', 'POST', 'DELETE'])
@@ -36,6 +35,13 @@ def change_groups(group_id):
         response = flask.jsonify(group.view_response(group_id))
     if request.method == 'DELETE':
         response = flask.jsonify(group.delete_response(group_id))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@care_app.route('/group/all', methods=['GET'])
+def view_groups():
+    group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    response = flask.jsonify(group.view_all_groups())
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -77,9 +83,9 @@ def update_reports(report_id):
 def view_reports_by_criteria(view_criteria):
     stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))
     if view_criteria == 'all':
-        response = stats.get_all_reports()
+        response = flask.jsonify(stats.get_all_reports())
     else:
-        response = stats.get_reports_by_group(view_criteria)
+        response = flask.jsonify(stats.get_reports_by_group(view_criteria))
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

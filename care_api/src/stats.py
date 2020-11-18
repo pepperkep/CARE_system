@@ -11,11 +11,11 @@ class Stats:
         self.report = Report(self.db_handler)
 
     def get_all_reports(self):
-        reports = self.db_handler.find_all('report', {})
+        reports = self.db_handler.find_all('report', {}, {"_id": 0})
         return reports
 
     def get_reports_by_group(self, group_name):
-        reports = self.db_handler.find_all('report', {"group":group_name})
+        reports = self.db_handler.find_all('report', {"group":group_name}, {"_id": 0})
         return reports
 
     def total_reports(self):

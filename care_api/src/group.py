@@ -43,6 +43,10 @@ class Group:
         del response['_id']
         return response
 
+    def view_all_groups(self):
+        response = self.db_handler.find_all('group', {}, {'_id': 0})
+        return response
+
     def recommend_group(self, recommend_id):
         request_data = request.json
         recommend_doc =  {"group_id":int(recommend_id),
