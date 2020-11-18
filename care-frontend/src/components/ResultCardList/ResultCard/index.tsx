@@ -24,25 +24,13 @@ export const ResultCard: React.FC<IResultCard.IProps> = ({ group, index }) => {
     return (
         <Card data-test-id="ResultCard" className={classes.rootCard} key={index}>
             <CardContent>
-                {group.size && (
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        size: {group.size}
-                    </Typography>
-                )}
                 <Typography variant="h5" component="h2">
                     <strong>{group.name}</strong>
                 </Typography>
-                <Typography variant="subtitle1" component="h2">
-                    rating: <strong>{group.rating}</strong>
+                <Typography variant="body2" component="p">
+                    location: {group.description}
                 </Typography>
-                <Typography className={classes.pos} color="textSecondary">
-                    {/* {i18n.language === 'cn' ? '发明人' : 'Inventors'}：{data.inventors.map((inventor, index) => index === data.inventors.length - 1 ? inventor.name.original : `${inventor.name.original}, `)} */}
-                </Typography>
-                {group.location && 
-                    <Typography variant="body2" component="p">
-                        location: {group.location}
-                    </Typography>
-                }
+
             </CardContent>
         </Card>
     )

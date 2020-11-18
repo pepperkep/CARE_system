@@ -14,6 +14,7 @@ care_app = Flask('care_api')
 config_path = 'config/config.ini'
 config = ConfigParser()
 config.read(config_path)
+print(config.sections())
 care_app.secret_key = config['app']['secret_key']
 
 @care_app.route('/account/<path:action>', methods=['GET', 'POST', 'DELETE'])

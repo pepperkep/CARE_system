@@ -1,10 +1,5 @@
-import { Report } from "../Report";
-
 export interface Group {
-    id: number;
+    id: string;
     name: string;
-    size?: number;
-    location?: string;
-    reports?: Report[];
-    rating: number;
+    description: string;
 }
