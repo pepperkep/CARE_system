@@ -4,7 +4,7 @@ import { ResultCard } from '..';
 import { Group } from '../../../../interfaces/Group';
 
 const group: Group = {
-    id: 0,
+    id: "1",
     name: 'hello',
     rating: 5
 }

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IRegisterForm } from './RegisterForm';
+import axios from 'axios';
 import { Paper, TextField, Button } from '@material-ui/core';
 
 import './RegistrationForm.css';
 
 export const RegisterForm: React.FC<IRegisterForm.IProps> = ({ onSignIn, onSignUp }) => {
+
+
     return (
         <Paper className="register-base">
-            <h1 style={{ marginLeft: '2.5rem' }}>Sign up</h1>
+            <h1 style={{ marginLeft: '2.5rem' }}>Sign up/Sign in</h1>
 
             <div className="register-input">
                 <TextField placeholder="account" />
