@@ -3,6 +3,10 @@ import flask
 import requests
 import json
 import pprint
+import sys
+
+sys.path.insert(0,'.')
+sys.path.insert(0,'..')
 from user import User
 from group import Group
 from report import Report
