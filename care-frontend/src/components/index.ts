@@ -5,3 +5,4 @@ export { ResultCardList } from './ResultCardList';
 export { RegisterForm } from './RegisterForm';
 export { ReportCard } from './ReportCard';
 export { GroupForm } from './GroupForm';
+export { ReportForm } from './ReportForm';
