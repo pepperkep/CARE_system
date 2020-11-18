@@ -10,13 +10,16 @@ class Group:
 
 
     def add_group(self, group_id):
-        if not session['is_admin']:
-            abort(403)
+        #if not session['is_admin']:
+        #    abort(403)
         request_data = request.json
-        group_doc =  {"group_id":int(group_id),
-            "name":request_data['name'],
-            "description":request_data['description']
-            }
+        try:
+            group_doc =  {"group_id":int(group_id),
+                "name":request_data['name'],
+                "description":request_data['description']
+                }
+        except KeyError:
+            abort(400)
         self.db_handler.create('group',group_doc)
         del group_doc['_id']
         return group_doc

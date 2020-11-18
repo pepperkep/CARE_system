@@ -29,7 +29,7 @@ def update_account(action):
 def change_groups(group_id):
     group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
     if request.method == 'POST':
-        response = flask.jsonify(group.add_response(group_id))
+        response = flask.jsonify(group.add_group(group_id))
     if request.method == 'PUT':
         response = flask.jsonify(group.update_response(group_id))
     if request.method == 'GET':
