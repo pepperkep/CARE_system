@@ -54,6 +54,8 @@ class User:
         except KeyError:
             abort(400)
         result = self.db_handler.find('user', query)
+        if result is None:
+            abort(404)
         if request_data['username'] == result['username'] and request_data['password'] == result['password']:
             session['id'] = int(login_id)
             session['username'] = request_data['username']

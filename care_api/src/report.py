@@ -25,6 +25,8 @@ class Report:
                 }
             self.db_handler.create('report', report_doc)
         except KeyError:
+            if "id" not in session:
+                abort(403)
             abort(400)
         del report_doc['_id']
         return report_doc
