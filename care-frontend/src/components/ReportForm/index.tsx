@@ -44,7 +44,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
         <Paper style={{ width: '30rem', display: 'flex', flexDirection: 'column', padding: '1.5rem' }}>
             <h2>Enter your report information</h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', height: '8rem', justifyContent: 'space-around', marginBottom: '1.5rem' }} className='group-form-inputs'>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '8rem', justifyContent: 'space-around', marginBottom: '1.5rem' }} className='report-form-inputs'>
                 <TextField placeholder='content' onChange={updateContent} />
                 <TextField placeholder='group' onChange={updateGroup} />
             </div>
