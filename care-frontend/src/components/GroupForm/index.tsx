@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { GroupContext } from '../../context/GroupContext';
 import { Paper, TextField, Button } from '@material-ui/core';
 import { Group } from '../../interfaces/Group';
 import { IGroupForm } from './GroupForm';
@@ -6,12 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
+    const { groupList, setGroupList } = useContext(GroupContext);
+
     const [groupInfo, setGroupInfo] = useState<Group>({
-        id: uuidv4(),
+        id: Math.floor(Math.random() * 10000),
         name: "",
         description: ""
     });
-
 
     const updateName = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setGroupInfo(prevState => {
@@ -38,6 +40,14 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
         }
 
         const response = await axios.post(`http://127.0.0.1:5000/group/${groupInfo.id}`, query);
+
+        if (response.status == 200) {
+            setGroupList([
+                ...groupList,
+                groupInfo
+            ]);
+        }
+
         console.log(response);
         onCancel && onCancel();
     }
