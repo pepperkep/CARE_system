@@ -35,7 +35,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
             description: reportInfo.group
         }
 
-        const response = await axios.post(`http://127.0.0.1:5000/group/${groupInfo.id}`, query);
+        const response = await axios.post(`http://127.0.0.1:5000/report/${reportInfo.group}`, query);
         console.log(response);
         onCancel && onCancel();
     }
