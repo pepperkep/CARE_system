@@ -27,40 +27,35 @@ function App() {
           setGroupList
         }}>
           <ReportContext.Provider value={{
-          reportList,
-          setReportList
-        }}>
-        <NavigationBar />
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <NavigationBar />
-          <Switch>
-            <Route path="/" exact>
-              <Home />
-            </Route>
+            reportList,
+            setReportList
+          }}>
+            <NavigationBar />
+            <Switch>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/" exact>
+                <Home />
+              </Route>
 
-            <Route path="/account" exact>
-              <Account />
-            </Route>
+              <Route path="/account" exact>
+                <Account />
+              </Route>
 
-            <Route path="/faq" exact>
-              <FAQ />
-            </Route>
+              <Route path="/faq" exact>
+                <FAQ />
+              </Route>
 
-            <Route path="/group" exact>
-              <Group />
-            </Route>
+              <Route path="/group" exact>
+                <Group />
+              </Route>
 
-          <Route path="/reports" exact>
-            <Report />
-          </Route>
-        </Switch>
-            <Route path="/reports" exact>
-              <Report />
-            </Route>
-          </Switch>
+              <Route path="/reports" exact>
+                <Report />
+              </Route>
+
+            </Switch>
           </ReportContext.Provider>
         </GroupContext.Provider>
       </SignInContext.Provider>
