@@ -6,3 +6,5 @@ export { RegisterForm } from './RegisterForm';
 export { ReportCard } from './ReportCard';
 export { GroupForm } from './GroupForm';
 export { ReportForm } from './ReportForm';
+export { ReportCardList } from './ReportCardList';
+
