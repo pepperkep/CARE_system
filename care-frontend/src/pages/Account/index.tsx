@@ -5,7 +5,7 @@ import { RegisterForm, ReportCard } from '../../components';
 import './account.css';
 
 export const Account = () => {
-    const { signedIn, setSignedIn } = useContext(SignInContext);
+    const { signedIn, userId, setSignedIn } = useContext(SignInContext);
 
     if (signedIn) {
         return (

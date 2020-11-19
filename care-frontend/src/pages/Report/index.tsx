@@ -18,7 +18,8 @@ export const Report = () => {
     useEffect(() => {
         const getReportList = async () => {
             const response = await axios.get('http://127.0.0.1:5000/report/all');
-
+            
+            console.log(response);
             if (response.status == 200) {
                 setReportList(response.data);
             }

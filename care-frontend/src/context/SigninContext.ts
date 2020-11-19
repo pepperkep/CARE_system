@@ -1,8 +1,14 @@
 import { createContext } from 'react';
 
-export interface SigninInterface {
-    signedIn: boolean,
-    setSignedIn: (isTrue: boolean) => void
+export interface SignInInfoInterface {
+    userId: number;
+    signedIn: boolean;
 }
 
-export const SignInContext = createContext<SigninInterface>({ signedIn: false, setSignedIn: () => { } });
+export interface SigninInterface {
+    userId: number;
+    signedIn: boolean;
+    setSignedIn: (signInInfo: any) => void
+}
+
+export const SignInContext = createContext<SigninInterface>({ userId: -1, signedIn: false, setSignedIn: () => { } });

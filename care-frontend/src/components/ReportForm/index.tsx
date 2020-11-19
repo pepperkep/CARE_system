@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ReportContext } from '../../context/ReportContext';
+import { SignInContext } from '../../context/SigninContext';
 import { Paper, TextField, Button } from '@material-ui/core';
 import { Report } from '../../interfaces/Report';
 import { IReportForm } from './ReportForm';
@@ -8,6 +9,7 @@ import axios from 'axios';
 
 export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
     const { reportList, setReportList } = useContext(ReportContext);
+    const { userId } = useContext(SignInContext);
 
     const [reportInfo, setReportInfo] = useState<Report>({
         id: Math.floor(Math.random() * 10000),
@@ -35,6 +37,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
 
     const createReport = async () => {
         const query = {
+            user_id: userId,
             content: reportInfo.content,
             group: reportInfo.group
         }
