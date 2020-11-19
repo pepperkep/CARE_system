@@ -2,7 +2,6 @@ from flask import request, abort, json, session
 from datetime import datetime
 from database.database_handler import DatabaseHandler
 
-
 class Report:
 
     def __init__(self, db_handler):
@@ -21,7 +20,7 @@ class Report:
                 "group":request_data['group'],
                 "content":request_data['content'],
                 "timestamp":timestamp,
-                "user_id": session["id"]
+                "user_id": request_data["user_id"]
                 }
             self.db_handler.create('report', report_doc)
         except KeyError:
