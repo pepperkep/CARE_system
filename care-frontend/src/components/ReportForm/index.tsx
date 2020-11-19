@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { ReportContext } from '../../context/ReportContext';
 import { Paper, TextField, Button } from '@material-ui/core';
 import { Report } from '../../interfaces/Report';
 import { IReportForm } from './ReportForm';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
+    const { reportList, setReportList } = useContext(ReportContext);
+
     const [reportInfo, setReportInfo] = useState<Report>({
+        id: Math.floor(Math.random() * 10000),
         content: "",
         group: ""
     });
 
-
-    const updateContent = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const updateName = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setReportInfo(prevState => {
             return {
                 ...prevState,
@@ -20,7 +24,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
         });
     }
 
-    const updateGroup = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const updateDescription = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setReportInfo(prevState => {
             return {
                 ...prevState,
@@ -32,10 +36,18 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
     const createReport = async () => {
         const query = {
             content: reportInfo.content,
-            description: reportInfo.group
+            group: reportInfo.group
         }
 
-        const response = await axios.post(`http://127.0.0.1:5000/report/${reportInfo.group}`, query);
+        const response = await axios.post(`http://127.0.0.1:5000/group/${reportInfo.group}`, query);
+
+        if (response.status == 200) {
+            setReportList([
+                ...reportList,
+                reportInfo
+            ]);
+        }
+
         console.log(response);
         onCancel && onCancel();
     }
@@ -45,8 +57,8 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
             <h2>Enter your report information</h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', height: '8rem', justifyContent: 'space-around', marginBottom: '1.5rem' }} className='report-form-inputs'>
-                <TextField placeholder='content' onChange={updateContent} />
-                <TextField placeholder='group' onChange={updateGroup} />
+                <TextField placeholder='content' onChange={updateName} />
+                <TextField placeholder='group' onChange={updateDescription} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'row' }} className='report-form-actions'>
