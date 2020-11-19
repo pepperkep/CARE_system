@@ -11,7 +11,7 @@ export const Group = () => {
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const transition = useTransition(modalOpen, null, {
-        from: { position: 'absolute', left: '40%', right: '50%', opacity: 0, transform: 'translate3d(0, -100%, 0)' },
+        from: { position: 'absolute', left: '40%', right: '50%', opacity: 0, transform: 'translate3d(0, -100%, 0)', zIndex: 100 },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
         leave: { opacity: 0, transform: 'translate3d(0, -100%, 0)' }
     });

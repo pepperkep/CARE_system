@@ -39,7 +39,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
             group: reportInfo.group
         }
 
-        const response = await axios.post(`http://127.0.0.1:5000/report/${reportInfo.group}`, query);
+        const response = await axios.post(`http://127.0.0.1:5000/report`, query);
 
         if (response.status == 200) {
             setReportList([
