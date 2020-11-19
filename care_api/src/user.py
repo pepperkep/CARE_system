@@ -47,17 +47,17 @@ class User:
         del response_dict['_id']
         return response_dict
 
-    def login(self, login_id):
+    def login(self):
         request_data = request.json
         try:
-            query = {'user_id': int(login_id)}
+            query = {'username': request_data['username']}
         except KeyError:
             abort(400)
         result = self.db_handler.find('user', query)
         if result is None:
             abort(404)
-        if request_data['username'] == result['username'] and request_data['password'] == result['password']:
-            session['id'] = int(login_id)
+        if request_data['password'] == result['password']:
+            session['id'] = result['user_id']
             session['username'] = request_data['username']
             session['is_admin']  = result['is_admin']
             session['timestamp'] = time.time()
