@@ -21,7 +21,7 @@ class Report:
                 "group":request_data['group'],
                 "content":request_data['content'],
                 "timestamp":timestamp,
-                "user_id":session["id"]
+                "user_id": session["id"]
                 }
             self.db_handler.create('report', report_doc)
         except KeyError:

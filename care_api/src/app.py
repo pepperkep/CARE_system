@@ -67,7 +67,7 @@ def approve_recommendation(recommend_id):
 @care_app.route('/report', methods=['POST'])
 def add_report():
     report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
-    response = report.add_report()
+    response = flask.jsonify(report.add_report())
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
