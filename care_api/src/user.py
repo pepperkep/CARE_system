@@ -70,7 +70,7 @@ class User:
             session['timestamp'] = time.time()
         else:
             return {'success': False, 'reason': 'wrong password'}
-        return {'success': True}
+        return {'success': True, 'user_id': result['user_id']}
 
     def is_logged_in(self):
         if 'id' in session:
