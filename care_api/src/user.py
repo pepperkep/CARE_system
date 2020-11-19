@@ -29,6 +29,12 @@ class User:
 
     def signup(self, username):
         request_data = request.json
+
+        query = {'username': username}
+        existing_user = self.db_handler.find('user', query)
+        if existing_user is not None:
+            return {'user_created': False}
+
         self.db_handler.gurantee_index('user', 'user_id')
         largest_id = self.db_handler.get_max('user', 'user_id')
         if largest_id is None:
@@ -45,6 +51,7 @@ class User:
         response_dict = user_doc
         del response_dict['password']
         del response_dict['_id']
+        response_dict['user_created'] = True
         return response_dict
 
     def login(self):
