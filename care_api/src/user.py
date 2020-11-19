@@ -59,7 +59,7 @@ class User:
         try:
             query = {'username': request_data['username']}
         except KeyError:
-            abort(400)
+            return {'success': False, 'reason': 'username field not in request'}
         result = self.db_handler.find('user', query)
         if result is None:
             abort(404)
@@ -69,8 +69,8 @@ class User:
             session['is_admin']  = result['is_admin']
             session['timestamp'] = time.time()
         else:
-            abort(401)
-        return {}
+            return {'success': False, 'reason': 'wrong password'}
+        return {'success': True}
 
     def is_logged_in(self):
         if 'id' in session:
