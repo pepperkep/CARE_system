@@ -17,7 +17,7 @@ export const Report = () => {
 
     useEffect(() => {
         const getReportList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/group/all');
+            const response = await axios.get('http://127.0.0.1:5000/report/all');
 
             if (response.status == 200) {
                 setReportList(response.data);
