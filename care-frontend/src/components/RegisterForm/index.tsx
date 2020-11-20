@@ -8,7 +8,7 @@ import { Paper, TextField, Button } from '@material-ui/core';
 import './RegistrationForm.css';
 
 export const RegisterForm: React.FC<IRegisterForm.IProps> = ({ onSignIn, onSignUp }) => {
-    const [account, setAccount] = useState<Account>({ username: "", password: "" });
+    const [account, setAccount] = useState<Account>({ userId: 0, username: "", password: "" });
     const { setSignedIn } = useContext(SignInContext);
 
     const updateUsername = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -46,7 +46,7 @@ export const RegisterForm: React.FC<IRegisterForm.IProps> = ({ onSignIn, onSignU
 
         const response = await axios.post(`http://127.0.0.1:5000/account/login`, query);
         if (response.data.success) {
-            setSignedIn(true);
+            setSignedIn({userId: response.data.user_id, signedIn: true});
         }
         console.log(response);
     }
