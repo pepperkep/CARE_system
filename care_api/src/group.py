@@ -31,8 +31,8 @@ class Group:
 
 
     def update_group(self, group_id):
-        if not session['is_admin']:
-            abort(403)
+        #if not session['is_admin']:
+        #    abort(403)
         request_data = request.json
         new_val = {"$set": {'name': request_data['name'],'description':request_data['description']}}
         self.db_handler.update('group',{"group_id":int(group_id)}, new_val)
