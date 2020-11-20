@@ -36,7 +36,6 @@ class Report:
         self.db_handler.delete('report', {"report_id": int(report_id)})
         return None
 
-
     def update_report_contents(self, report_id):
         report = self.db_handler.find('report', {"report_id":int(report_id)})
         if report is None:

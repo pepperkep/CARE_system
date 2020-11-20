@@ -53,6 +53,9 @@ class Stats:
         for document in cursor:
              print(document)
 
+    def most_recent_reports(self, num_reports):
+        return self.db_handler.find_sorted('report', 'timestamp', int(num_reports),  {"_id": 0})
+
     def num_reports_per_day(self):
         report_db = self.db_handler.db['report']
         # Aggregation by timestamp

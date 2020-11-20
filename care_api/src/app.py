@@ -83,6 +83,12 @@ def update_reports(report_id):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+@care_app.route('/report/recent/<int:num_reports>')
+def find_newest_reports(num_reports):
+    stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))
+    response = flask.jsonify(stats.most_recent_reports(num_reports))
+    return response
+
 @care_app.route('/report/<path:view_criteria>', methods=['GET'])
 def view_reports_by_criteria(view_criteria):
     stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))

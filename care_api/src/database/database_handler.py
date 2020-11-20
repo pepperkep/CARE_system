@@ -45,6 +45,13 @@ class DatabaseHandler:
     def update(self, collection_name, selector, doc):
         return self.db[collection_name].update_one(selector, doc).modified_count
 
+    def find_sorted(self, collection_name, field_name, num_reports=3, included_fields=None):
+        sort_list = self.db[collection_name].find({}, included_fields).sort([(field_name, -1)]).limit(num_reports)
+        if sort_list.count() > 0:
+            return list(sort_list)
+        else:
+            return None
+
     def get_max(self, collection_name, field_name):
         max_list = self.db[collection_name].find().sort([(field_name, -1)]).limit(1)
         if max_list.count() > 0:
