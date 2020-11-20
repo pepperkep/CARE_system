@@ -21,7 +21,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
         setReportInfo(prevState => {
             return {
                 ...prevState,
-                name: e.target.value
+                content: e.target.value
             }
         });
     }
@@ -30,7 +30,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
         setReportInfo(prevState => {
             return {
                 ...prevState,
-                description: e.target.value
+                group: e.target.value
             }
         });
     }

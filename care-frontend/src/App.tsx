@@ -4,7 +4,6 @@ import { GroupContext } from './context/GroupContext';
 import { ReportContext } from './context/ReportContext';
 import { Group as G } from './interfaces/Group';
 import { Report as R } from './interfaces/Report';
-import { Account as A } from './interfaces/Account';
 import { Group, Account, FAQ, Home, Report } from './pages';
 import { NavigationBar } from './components';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
