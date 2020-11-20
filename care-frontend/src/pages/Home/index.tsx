@@ -9,7 +9,7 @@ export const Home = () => {
 
     useEffect(() => {
         const getReports = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/report/recents/3');
+            const response = await axios.get('http://127.0.0.1:5000/report/recent/3');
 
             if (response.status == 200) {
                 setReports(response.data);
