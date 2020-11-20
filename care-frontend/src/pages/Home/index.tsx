@@ -13,7 +13,7 @@ export const Home = () => {
 
     useEffect(() => {
         const getReportList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/report/all');
+            const response = await axios.get('http://127.0.0.1:5000/report');
 
             if (response.status == 200) {
                 setReportList(response.data);
@@ -25,7 +25,7 @@ export const Home = () => {
 
     useEffect(() => {
         const getGroupList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/group/all');
+            const response = await axios.get('http://127.0.0.1:5000/group');
 
             if (response.status == 200) {
                 setGroupList(response.data);
