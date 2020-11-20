@@ -7,13 +7,12 @@ import axios from 'axios';
 
 export const Home = () => {
     const { setReportList, reportList } = useContext(ReportContext);
-    const { setGroupList, groupList } = useContext(GroupContext);
 
     const [] = useState<boolean>(true);
 
     useEffect(() => {
         const getReportList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/report');
+            const response = await axios.get('http://127.0.0.1:5000/report/recents/3');
 
             if (response.status == 200) {
                 setReportList(response.data);
@@ -23,23 +22,9 @@ export const Home = () => {
         getReportList();
     }, [setReportList]);
 
-    useEffect(() => {
-        const getGroupList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/group');
-
-            if (response.status == 200) {
-                setGroupList(response.data);
-            }
-        }
-
-        getGroupList();
-    }, [setGroupList]);
-
     return (
         <div>
             <ReportCardList reportList={reportList} />
-
-            <ResultCardList groupList={groupList} />
         </div>
     )
 }
