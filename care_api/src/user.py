@@ -48,8 +48,10 @@ class User:
             abort(400)
         self.db_handler.create('user', user_doc)
         response_dict = user_doc
-        del response_dict['password']
-        del response_dict['_id']
+        if 'password' in response_dict:
+            del response_dict['password']
+        if '_id' in response_dict:
+            del response_dict['_id']
         response_dict['user_created'] = True
         return response_dict
 
@@ -114,8 +116,6 @@ class User:
             abort(404)
 
     def delete_account(self, account_id):
-        if session['is_admin'] or session['id'] == account_id:
-            query = {'user_id': int(account_id)}
-            self.db_handler.delete('user', query)
-            return query
-        abort(403)
+        query = {'user_id': int(account_id)}
+        self.db_handler.delete('user', query)
+        return query

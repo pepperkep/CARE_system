@@ -27,7 +27,8 @@ class Report:
             if "id" not in session:
                 abort(403)
             abort(400)
-        del report_doc['_id']
+        if '_id' in report_doc:
+            del report_doc['_id']
         return report_doc
 
     def delete_report(self, report_id):
@@ -38,8 +39,6 @@ class Report:
         report = self.db_handler.find('report', {"report_id":int(report_id)})
         if report is None:
             abort(404)
-        if not session['is_admin'] and not report['user_id'] == session['id']:
-            abort(403)
         request_data = request.json
         new_content = {"$set": {'content': request_data['content'],'group' : request_data['group']}}
         self.db_handler.update('report',{"report_id":int(report_id)}, new_content)
@@ -48,5 +47,6 @@ class Report:
 
     def view_report(self, view_id):
         report = self.db_handler.find('report', {"report_id":int(view_id)})
-        del report['_id']
+        if '_id' in report:
+            del report['_id']
         return report

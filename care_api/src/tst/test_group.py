@@ -15,14 +15,14 @@ class TestGroup(unittest.TestCase):
 
     def test_add_group(self):
         self.mock_db_handler.create.return_value = 'test'
-        expected_result = {'name': 'marx', 'description':'group','_id':  45}
+        expected_result = {'description': 'group', 'group_id': 45, 'name': 'marx'}
         with app.test_request_context('group/45', json={'name': 'marx', 'description': 'group'}):
             actual_result = self.group.add_group(45)
             self.assertEqual(expected_result, actual_result)
 
     def test_view_group(self):
         self.mock_db_handler.find.return_value = {'name': 'marx', 'description':'group','_id':  45}
-        expected_result = {'name': 'marx', 'description':'group','_id':  45}
+        expected_result = {'description': 'group', 'name': 'marx'}
         with app.test_request_context('group/45', json={'name': 'marx', 'description': 'group'}):
             actual_result = self.group.view_group(45)
             self.assertEqual(expected_result, actual_result)
@@ -43,7 +43,7 @@ class TestGroup(unittest.TestCase):
 
     def test_recommend_group(self):
         self.mock_db_handler.create.return_value = 'test'
-        expected_result = {'name': 'marx', 'description':'group','_id':  45}
+        expected_result = {'description': 'group', 'group_id': 45, 'name': 'marx'}
         with app.test_request_context('group/45', json={'name': 'marx', 'description': 'group'}):
             actual_result = self.group.recommend_group(45)
             self.assertEqual(expected_result, actual_result)

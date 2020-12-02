@@ -20,14 +20,12 @@ class Group:
         except KeyError:
             abort(400)
         self.db_handler.create('group',group_doc)
-        del group_doc['_id']
+        if '_id' in group_doc:
+            del group_doc['_id']
         return group_doc
 
     def delete_group(self,group_id):
-        if not session['is_admin']:
-            abort(403)
         self.db_handler.delete('group', {"group_id":int(group_id)})
-
 
     def update_group(self, group_id):
 
@@ -38,7 +36,8 @@ class Group:
 
     def view_group(self,view_id):
         response = self.db_handler.find('group',{"group_id":int(view_id)})
-        del response['_id']
+        if '_id' in response:
+            del response['_id']
         return response
 
     def view_all_groups(self):
@@ -52,7 +51,8 @@ class Group:
             "description":request_data['description']
             }
         self.db_handler.create('recommendation',recommend_doc)
-        del recommend_doc['_id']
+        if '_id' in recommend_doc:
+            del recommend_doc['_id']
         return recommend_doc
 
     def recommendation_action(self, recommend_id):
