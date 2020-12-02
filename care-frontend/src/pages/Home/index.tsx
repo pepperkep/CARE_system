@@ -1,45 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ReportContext } from '../../context/ReportContext';import { Button } from '@material-ui/core';
+import { Report } from '../../interfaces/Report';
 import { ReportCardList } from '../../components';
-import { GroupContext } from '../../context/GroupContext';
-import { ResultCardList } from '../../components';
 import axios from 'axios';
 
 export const Home = () => {
-    const { setReportList, reportList } = useContext(ReportContext);
-    const { setGroupList, groupList } = useContext(GroupContext);
-
-    const [] = useState<boolean>(true);
+    const [reports, setReports] = useState<Report[]>([]);
 
     useEffect(() => {
-        const getReportList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/report');
+        const getReports = async () => {
+            const response = await axios.get('http://127.0.0.1:5000/report/recent/3');
 
             if (response.status == 200) {
-                setReportList(response.data);
+                setReports(response.data);
             }
         }
 
-        getReportList();
-    }, [setReportList]);
-
-    useEffect(() => {
-        const getGroupList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/group');
-
-            if (response.status == 200) {
-                setGroupList(response.data);
-            }
-        }
-
-        getGroupList();
-    }, [setGroupList]);
+        getReports();
+    }, [setReports]);
 
     return (
         <div>
-            <ReportCardList reportList={reportList} />
-
-            <ResultCardList groupList={groupList} />
+            <ReportCardList reportList={reports} />
         </div>
     )
 }
