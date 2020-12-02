@@ -2,12 +2,14 @@ from flask import request, abort, json, session
 from datetime import datetime
 from database.database_handler import DatabaseHandler
 
+# Class that handles CRUD operations related to on campus groups
 class Report:
 
+# Initialize connection to the database through the DatabaseHandler class
     def __init__(self, db_handler):
         self.db_handler = db_handler
 
-
+# Adds a report to the database with a unique id and a timestamp for when it was created
     def add_report(self, timestamp = datetime.today().strftime ('%d%m%Y')):
         request_data = request.json
         self.db_handler.gurantee_index('report', 'report_id')
@@ -30,10 +32,12 @@ class Report:
         del report_doc['_id']
         return report_doc
 
+# Removes the report from the database with the input report_id
     def delete_report(self, report_id):
         self.db_handler.delete('report', {"report_id": int(report_id)})
         return None
 
+# Update a report's information, its content and/or associated group, in the database
     def update_report_contents(self, report_id):
         report = self.db_handler.find('report', {"report_id":int(report_id)})
         if report is None:
@@ -45,7 +49,7 @@ class Report:
         self.db_handler.update('report',{"report_id":int(report_id)}, new_content)
         return request_data
 
-
+# Returns a report currently within the database based on the report's id
     def view_report(self, view_id):
         report = self.db_handler.find('report', {"report_id":int(view_id)})
         del report['_id']

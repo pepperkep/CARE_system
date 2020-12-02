@@ -14,13 +14,14 @@ from stats import Stats
 from configparser import ConfigParser
 from database.database_handler import DatabaseHandler
 
-# Instantiate Flask app
+# Instantiate Flask app and read from config file on disk to set up the app
 care_app = Flask('care_api')
 config_path = 'config/config.ini'
 config = ConfigParser()
 config.read(config_path)
 care_app.secret_key = config['app']['secret_key']
 
+# Handles routing for API calls related to user actions
 @care_app.route('/account/<path:action>', methods=['GET', 'POST', 'DELETE'])
 def update_account(action):
     current_user = User(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -28,6 +29,7 @@ def update_account(action):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Handles routing for API calls related to CRUD operations related to groups
 @care_app.route('/group/<int:group_id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def change_groups(group_id):
     group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -42,6 +44,7 @@ def change_groups(group_id):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Handles routing for API call to return all groups in the database
 @care_app.route('/group/all', methods=['GET'])
 def view_groups():
     group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -50,6 +53,7 @@ def view_groups():
     return response
 
 
+# Handles routing for API call to add a recommendation
 @care_app.route('/group/recommend/<int:recommend_id>', methods=['POST'])
 def add_recommendation(recommend_id):
     group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -57,6 +61,7 @@ def add_recommendation(recommend_id):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Handles routing for API call to approve a recommendation
 @care_app.route('/group/recommend-approve/<int:recommend_id>', methods=['POST'])
 def approve_recommendation(recommend_id):
     group = Group(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -64,6 +69,7 @@ def approve_recommendation(recommend_id):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Handles routing for API call to add a report
 @care_app.route('/report', methods=['POST'])
 def add_report():
     report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -71,6 +77,7 @@ def add_report():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Handles routing for API calls related to CRUD operations related to reports
 @care_app.route('/report/<int:report_id>', methods=['GET', 'PUT', 'DELETE'])
 def update_reports(report_id):
     report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -83,12 +90,14 @@ def update_reports(report_id):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Handles routing for finding the newest reports to display on the homepage
 @care_app.route('/report/recent/<int:num_reports>')
 def find_newest_reports(num_reports):
     stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))
     response = flask.jsonify(stats.most_recent_reports(num_reports))
     return response
 
+# Handles routing for displaying reports based on associated group
 @care_app.route('/report/<path:view_criteria>', methods=['GET'])
 def view_reports_by_criteria(view_criteria):
     stats = Stats(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -99,6 +108,7 @@ def view_reports_by_criteria(view_criteria):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# Implements spam detection for the contents of a report within the database
 @care_app.route('/report/spam/<int:report_id>', methods=['POST'])
 def is_report_spam(report_id):
     report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))

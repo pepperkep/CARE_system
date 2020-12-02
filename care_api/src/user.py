@@ -2,12 +2,15 @@ from flask import request, abort, json, session
 from database.database_handler import DatabaseHandler
 import time
 
+# Class that handles user actions and CRUD operations related to storing, changing or removing user information
 class User:
 
+# Initialize connection to the database through the DatabaseHandler class and sets login time for user
     def __init__(self, db_handler, login_time=5000):
         self.db_handler = db_handler
         self.login_time = login_time
 
+# Returns the corresponing function for the action that the user is attempting to take
     def determine_action(self, path):
         path_list = path.split("/")
         params = tuple(path_list[1:])
@@ -26,6 +29,7 @@ class User:
             return self.delete_account(action, *params)
         abort(404)
 
+# Adds user and their account informationto the database
     def signup(self, username):
         request_data = request.json
 
@@ -37,7 +41,7 @@ class User:
         self.db_handler.gurantee_index('user', 'user_id')
         largest_id = self.db_handler.get_max('user', 'user_id')
         if largest_id is None:
-            largest_id = -1 
+            largest_id = -1
         try:
             user_doc = {
                     'user_id': largest_id + 1,
@@ -53,6 +57,7 @@ class User:
         response_dict['user_created'] = True
         return response_dict
 
+# Handles user login and creating a session for the user
     def login(self):
         request_data = request.json
         try:
@@ -71,6 +76,7 @@ class User:
             return {'success': False, 'reason': 'wrong password'}
         return {'success': True, 'user_id': result['user_id']}
 
+# Checks whether a user is still logged in
     def is_logged_in(self):
         if 'id' in session:
             if time.time() - session['timestamp'] > self.login_time:
@@ -80,10 +86,12 @@ class User:
                 return True
         return False
 
+# Handles admin privileges and returns whether a user has those privileges
     def is_authorized(self):
         if self.is_logged_in():
             return session['is_admin']
 
+# Handles user logging out
     def logout(self):
         session.pop('id', None)
         session.pop('username', None)
@@ -91,6 +99,7 @@ class User:
         session.pop('timestamp', None)
         return {}
 
+# Allows user to change password from previous password and saves new password to the database
     def change_password(self, username):
         if session['username'] == username:
             request_data = request.json
@@ -102,7 +111,8 @@ class User:
             self.db_handler.update('user', query, change)
             return query
         abort(403)
-        
+
+# Returns user information, excluding the user's password, associated with an account id
     def access_user(self, account_id):
         query = {'user_id': int(account_id)}
         result =  self.db_handler.find('user', query)
@@ -113,6 +123,7 @@ class User:
         else:
             abort(404)
 
+# Removes the user from the database with the input account id
     def delete_account(self, account_id):
         if session['is_admin'] or session['id'] == account_id:
             query = {'user_id': int(account_id)}

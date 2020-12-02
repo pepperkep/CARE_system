@@ -2,13 +2,14 @@ from flask import request, abort, session
 from database.database_handler import DatabaseHandler
 
 
-
+# Class that hndles CRUD operations related to on campus groups
 class Group:
 
+# Initialize connection to the database through the DatabaseHandler class
     def __init__(self, db_handler):
         self.db_handler = db_handler
 
-
+# Add groups to the database with a unique id
     def add_group(self, group_id):
 
         request_data = request.json
@@ -23,12 +24,13 @@ class Group:
         del group_doc['_id']
         return group_doc
 
+# Removes the group from the database with the input group_id
     def delete_group(self,group_id):
         if not session['is_admin']:
             abort(403)
         self.db_handler.delete('group', {"group_id":int(group_id)})
 
-
+# Update the contents of a group's information, its name or description, in the database
     def update_group(self, group_id):
 
         request_data = request.json
@@ -36,15 +38,19 @@ class Group:
         self.db_handler.update('group',{"group_id":int(group_id)}, new_val)
         return request_data
 
+# View a group's name and description.
     def view_group(self,view_id):
         response = self.db_handler.find('group',{"group_id":int(view_id)})
         del response['_id']
         return response
 
+# View all groups currently within the database
     def view_all_groups(self):
         response = self.db_handler.find_all('group', {}, {'_id': 0})
+
         return response
 
+# Recommend a group to be added to the list of groups
     def recommend_group(self, recommend_id):
         request_data = request.json
         recommend_doc =  {"group_id":int(recommend_id),
@@ -55,6 +61,7 @@ class Group:
         del recommend_doc['_id']
         return recommend_doc
 
+# Handles whether a user recommended group will be added to the list of groups on the application
     def recommendation_action(self, recommend_id):
 
         recommendation = self.db_handler.find('recommendation', {'recommendation_id': int(recommend_id)})
@@ -75,5 +82,3 @@ class Group:
                 return {'accept': False}
         else:
             abort(404)
-
-            
