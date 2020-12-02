@@ -21,7 +21,6 @@ class User:
         if action == 'change_password':
             return self.change_password(*params)
         if request.method == 'GET':
-            print(*params)
             return self.access_user(action, *params)
         if request.method == 'DELETE':
             return self.delete_account(action, *params)

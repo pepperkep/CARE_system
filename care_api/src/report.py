@@ -31,8 +31,6 @@ class Report:
         return report_doc
 
     def delete_report(self, report_id):
-        #if not session['is_admin']:
-        #    abort(403)
         self.db_handler.delete('report', {"report_id": int(report_id)})
         return None
 
