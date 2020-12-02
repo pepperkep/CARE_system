@@ -2,7 +2,7 @@ from flask import request, abort, session
 from database.database_handler import DatabaseHandler
 
 
-# Class that hndles CRUD operations related to on campus groups
+# Class that handles CRUD operations related to on campus groups
 class Group:
 
 # Initialize connection to the database through the DatabaseHandler class
