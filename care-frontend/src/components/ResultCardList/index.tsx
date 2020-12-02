@@ -10,7 +10,7 @@ export const ResultCardList: React.FC<IResultCardList.IProps> = ({ groupList }) 
         from: { opacity: 0 }
     })
 
-    const transition = useTransition(groupList, group => group.id, {
+    const transition = useTransition(groupList, group => group.group_id, {
         from: { opacity: 0, transform: 'translate3d(0, -40px, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0px, 0)'},
         leave: { opacity: 0, transform: 'translate3d(0, -40px, 0)' }
@@ -19,13 +19,16 @@ export const ResultCardList: React.FC<IResultCardList.IProps> = ({ groupList }) 
     return (
         <>
             <Grid container direction='column' alignItems='center'>
-                {transition.map(({item, props, key}, index) => (
-                    <animated.div style={props} key={key}>
-                        <Grid>
-                            <ResultCard group={item} index={index} />
-                        </Grid>
-                    </animated.div>
-                ))}
+                {transition.map(({item, props, key}, index) => {
+                    console.log(item);
+                    return (
+                        <animated.div style={props} key={key}>
+                            <Grid>
+                                <ResultCard group={item} index={index} />
+                            </Grid>
+                        </animated.div>
+                    )
+                })}
             </Grid>
         </>
     )

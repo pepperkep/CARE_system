@@ -10,7 +10,7 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
     const { groupList, setGroupList } = useContext(GroupContext);
 
     const [groupInfo, setGroupInfo] = useState<Group>({
-        id: Math.floor(Math.random() * 10000),
+        group_id: Math.floor(Math.random() * 10000),
         name: "",
         description: ""
     });
@@ -39,7 +39,7 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
             description: groupInfo.description
         }
 
-        const response = await axios.post(`http://127.0.0.1:5000/group/${groupInfo.id}`, query);
+        const response = await axios.post(`http://127.0.0.1:5000/group/${groupInfo.group_id}`, query);
 
         if (response.status == 200) {
             setGroupList([

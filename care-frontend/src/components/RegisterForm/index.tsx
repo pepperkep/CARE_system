@@ -57,7 +57,7 @@ export const RegisterForm: React.FC<IRegisterForm.IProps> = ({ onSignIn, onSignU
 
             <div className="register-input">
                 <TextField placeholder="account" onChange={updateUsername} />
-                <TextField placeholder="password" onChange={updatePassword} />
+                <TextField placeholder="password" type="Password" onChange={updatePassword} />
             </div>
 
             <div className='register-action'>
