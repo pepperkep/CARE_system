@@ -1,12 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import { NavLink } from "../NavLink"
 import { useLocation } from 'react-router-dom';
-// import { pageIndex } from '../../../shared/pageIndex/pageIndex';
 import { INavLinkList } from './NavLinkList';
 
 export const NavLinkList: FunctionComponent<INavLinkList.IProps> = ({ className }) => {
-    // let currentPageIndex = pageIndex.indexOf(useLocation().pathname);
-
     const [currentPageState, setCurrentPageState] = useState(0);
 
     const navLinkClickHandler = (index: number) => {

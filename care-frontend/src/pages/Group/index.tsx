@@ -16,18 +16,6 @@ export const Group = () => {
         leave: { opacity: 0, transform: 'translate3d(0, -100%, 0)' }
     });
 
-    useEffect(() => {
-        const getGroupList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/group/all');
-
-            if (response.status == 200) {
-                setGroupList(response.data);
-            }
-        }
-
-        getGroupList();
-    }, [setGroupList]);
-
     return (
         <div>
             {transition.map(({ item, props, key }) =>
@@ -37,7 +25,7 @@ export const Group = () => {
                 </animated.div>
             )}
 
-            <Button onClick={() => setModalOpen(prevState => !prevState)}>Propse Group</Button>
+            <Button onClick={() => setModalOpen(prevState => !prevState)}>Propose Group</Button>
             <ResultCardList groupList={groupList} />
         </div>
     )

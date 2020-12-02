@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SignInContext } from './context/SigninContext';
 import { GroupContext } from './context/GroupContext';
 import { ReportContext } from './context/ReportContext';
@@ -7,12 +7,40 @@ import { Report as R } from './interfaces/Report';
 import { Group, Account, FAQ, Home, Report } from './pages';
 import { NavigationBar } from './components';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 
 function App() {
   const [signInInfo, setSignInInfo] = useState({ userId: -1, signedIn: false });
   const [groupList, setGroupList] = useState<G[]>([]);
   const [reportList, setReportList] = useState<R[]>([]);
+
+  useEffect(() => {
+    const getReportList = async () => {
+      const response = await axios.get('http://127.0.0.1:5000/report/all');
+
+      console.log(response);
+      if (response.status == 200) {
+        setReportList(response.data);
+      }
+    }
+
+    getReportList();
+  }, [setReportList]);
+
+  useEffect(() => {
+
+    const getGroupList = async () => {
+      const response = await axios.get('http://127.0.0.1:5000/group/all');
+      console.log(response);
+
+      if (response.status == 200) {
+        setGroupList(response.data);
+      }
+    }
+
+    getGroupList();
+  }, [setGroupList]);
 
   return (
     <Router>
