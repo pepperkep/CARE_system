@@ -1,12 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { SignInContext } from '../../context/SigninContext';
-import { RegisterForm, ReportCard } from '../../components';
+import { ReportContext } from '../../context/ReportContext';
+import { RegisterForm, Report, ReportCard } from '../../components';
 import axios from 'axios';
 
 import './account.css';
+import { Grid } from '@material-ui/core';
 
 export const Account = () => {
     const { signedIn, userId, setSignedIn } = useContext(SignInContext);
+    const { reportList, setReportList } = useContext(ReportContext);
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
@@ -17,14 +20,25 @@ export const Account = () => {
         }
 
         getUserName();
-    }, [signedIn]);
+    }, [userId]);
 
     if (signedIn) {
         return (
             <div className='account-base'>
                 <h1>Hello {userName}</h1>
-                <ReportCard />
-            </div>
+
+                <h3>Your Proposed Reports</h3>
+                {reportList.map((report, index) => {
+                    if (report.userId == userId) {
+                        console.log('hello');
+                        return (
+                            <Grid>
+                                <Report id={report.id} content={report.content} group={report.group} />
+                            </Grid>
+                        )
+                    }
+                })}
+            </div >
         )
     }
 

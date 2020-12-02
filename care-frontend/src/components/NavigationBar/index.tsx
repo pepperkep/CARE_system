@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useState } from "react";
 import { Redirect } from 'react-router-dom';
-// import { IntroExpandedContext } from "../../Context/IntroExpandedContext"
 import { NavLinkList } from "./NavLinkList";
-// import { colorArray } from "../../shared/colorArray/colorArray";
 import { useLocation } from 'react-router-dom';
-// import { pageIndex } from '../../shared/pageIndex/pageIndex'
 import { INavigationBar } from './NavigationBar';
 
 import '@rmwc/ripple/styles';
@@ -13,12 +10,6 @@ import "./NavigationBar.css";
 
 export const NavigationBar: React.FC<INavigationBar.IProps> = ({ className }) => {
     const [redirect, setRedirect] = useState<boolean>(false);
-
-    // let currentPageIndex = pageIndex.indexOf(useLocation().pathname);
-
-    // const IntroExpanded = useContext(IntroExpandedContext);
-
-    // let titleClass = !IntroExpanded?.pagesExpanded[currentPageIndex - 1] ? "title-secondary" : "title";
 
     const titleClass = "title";
 

@@ -15,19 +15,6 @@ export const Report = () => {
         leave: { opacity: 0, transform: 'translate3d(0, -100%, 0)' }
     });
 
-    useEffect(() => {
-        const getReportList = async () => {
-            const response = await axios.get('http://127.0.0.1:5000/report/all');
-            
-            console.log(response);
-            if (response.status == 200) {
-                setReportList(response.data);
-            }
-        }
-
-        getReportList();
-    }, [setReportList]);
-
     return (
         <div>
             {transition.map(({ item, props, key }) => 

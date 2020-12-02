@@ -12,6 +12,7 @@ export const ReportForm: React.FC<IReportForm.IProps> = ({ onCancel }) => {
     const { userId } = useContext(SignInContext);
 
     const [reportInfo, setReportInfo] = useState<Report>({
+        userId: userId,
         id: Math.floor(Math.random() * 10000),
         content: "",
         group: ""
