@@ -99,7 +99,6 @@ def view_reports_by_criteria(view_criteria):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-
 @care_app.route('/report/spam/<int:report_id>', methods=['POST'])
 def is_report_spam(report_id):
     report = Report(DatabaseHandler(config_path, config['mongodb']['db_name']))
@@ -107,7 +106,7 @@ def is_report_spam(report_id):
     api_url = "https://plino.herokuapp.com/api/v1/classify/"
     payload = \
     {
-    'email_text': report_doc.get('content')
+        'email_text': report_doc.get('content')
     }
     headers = {'content-type': 'application/json'}
     # query spam detection API
@@ -117,7 +116,6 @@ def is_report_spam(report_id):
         return True
     else:
         return False
-
 
 @care_app.route('/faq/<int:question_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def update_faq(question_id):

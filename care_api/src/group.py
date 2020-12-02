@@ -10,8 +10,7 @@ class Group:
 
 
     def add_group(self, group_id):
-        #if not session['is_admin']:
-        #    abort(403)
+
         request_data = request.json
         try:
             group_doc =  {"group_id":int(group_id),
@@ -31,8 +30,7 @@ class Group:
 
 
     def update_group(self, group_id):
-        #if not session['is_admin']:
-        #    abort(403)
+
         request_data = request.json
         new_val = {"$set": {'name': request_data['name'],'description':request_data['description']}}
         self.db_handler.update('group',{"group_id":int(group_id)}, new_val)
@@ -58,8 +56,7 @@ class Group:
         return recommend_doc
 
     def recommendation_action(self, recommend_id):
-        if not session['is_admin']:
-            abort(403)
+
         recommendation = self.db_handler.find('recommendation', {'recommendation_id': int(recommend_id)})
         if recommendation is not None:
             self.db_handler.delete('recommendation', {'recommendation_id': int(recommend_id)})
