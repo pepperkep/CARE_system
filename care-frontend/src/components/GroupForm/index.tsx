@@ -16,6 +16,7 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
     });
 
     const updateName = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        //update group name
         setGroupInfo(prevState => {
             return {
                 ...prevState,
@@ -25,6 +26,7 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
     }
 
     const updateDescription = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        //update group description
         setGroupInfo(prevState => {
             return {
                 ...prevState,
@@ -34,13 +36,15 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
     }
 
     const createGroup = async () => {
+        //create query
         const query = {
             name: groupInfo.name,
             description: groupInfo.description
         }
-
+        //send request
         const response = await axios.post(`http://127.0.0.1:5000/group/${groupInfo.group_id}`, query);
 
+        //update group list if successful
         if (response.status == 200) {
             setGroupList([
                 ...groupList,
@@ -48,7 +52,7 @@ export const GroupForm: React.FC<IGroupForm.IProps> = ({ onCancel }) => {
             ]);
         }
 
-        console.log(response);
+        //close the form
         onCancel && onCancel();
     }
 
